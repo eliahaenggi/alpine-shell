@@ -3,7 +3,7 @@
 
 void print_prompt1();
 void print_prompt2();
-char *read_cmd();
+char *readCommand();
 
 
 #endif //SHELL_PROJECT_SHELL_H

@@ -8,7 +8,7 @@ int main(int argc, char **argv) {
     char *cmd;
     while(1) {
         print_prompt1();
-        cmd = read_cmd();
+        cmd = readCommand();
         if (!cmd) {
             exit(EXIT_SUCCESS);
         }
@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
     exit(EXIT_SUCCESS);
 }
 
-char* read_cmd() {
+char* readCommand() {
     char buf[1024];
     char *ptr = NULL;
     char ptrlen = 0;
