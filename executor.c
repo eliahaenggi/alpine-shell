@@ -1,11 +1,23 @@
 #include "executor.h"
 #include "parser.h"
 #include "commands/rename.h"
+#include "commands/delete.h"
 #include <stdio.h>
 
 void executeCmd(cmd* command) {
+    int res = 0; // 0 if command executed as expected. Else if execution failed.
     switch(command->type) {
         case delete:
+            if (command->length != 2) {
+                printf("Invalid number of arguments for delete.\n");
+                return;
+            }
+            res = deleteFile(command->head->next->tok.text); // call second node of command linked list
+            if (res == 0) {
+                printf("File deleted successfully.\n");
+            } else {
+                printf("Delete failed.\n");
+            }
             break;
         case move:
             break;
@@ -14,7 +26,7 @@ void executeCmd(cmd* command) {
                 printf("Invalid number of arguments for rename.\n");
                 return;
             }
-            int res = renameFile(command->head->next->tok.text, command->head->next->next->tok.text); // call second and third argument of command
+            res = renameFile(command->head->next->tok.text, command->head->next->next->tok.text); // call second and third node of command linked list
             if (res == 0) {
                 printf("File renamed successfully.\n");
             } else {
