@@ -9,7 +9,7 @@
 #include <dirent.h>
 
 //Function shows all files current directory and sets up names_node
-struct names_node show_content(char name [260]);
+struct names_node show_content();
 
 //Deletes the current names list
 void delete_names_list();
@@ -27,7 +27,7 @@ void print_current_dir();
 //DIR current_directory;
 
 // changes into the newly specified directory
-DIR change_directory(char directory_name [260]);
+void change_directory(int number);
 
 // Exits the current directory and opens the containing one
 DIR exit_directory();
