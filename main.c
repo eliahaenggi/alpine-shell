@@ -3,8 +3,10 @@
 #include <errno.h>
 #include <string.h>
 #include "shell.h"
+#include "commands/show_dir.h"
 
-int main(int argc, char **argv) {
+
+int start(int argc, char **argv) {
     char *cmd;
     while(1) {
         print_prompt1();
@@ -64,4 +66,8 @@ char* readCommand() {
     }
 
     return ptr;
+}
+
+int main(int argc, char **argv) {
+    show(argc, argv);
 }
