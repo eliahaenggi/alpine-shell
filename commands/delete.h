@@ -1,8 +1,7 @@
-//
-// Created by Matthew on 10/06/2022.
-//
+#ifndef DELETE_H
+#define DELETE_H
 
-#ifndef CLASSIC_C_DELETE_H
-#define CLASSIC_C_DELETE_H
+char old_filename [260];
+int deleteFile(char* name);
 
-#endif //CLASSIC_C_DELETE_H
+#endif

@@ -1,6 +1,5 @@
 #include "rename.h"
 #include <stdio.h>
-#include <dirent.h>
 #include <string.h>
 
 
@@ -24,7 +23,10 @@ int setOldFileName(char* name) {
  * Renames file to specified new name. Returns 0 if renaming was successful.
  */
 int renameFile(char* oldName, char* newName) {
-    setOldFileName(oldName);
-    int res = rename(old_filename, newName);
+    int res = setOldFileName(oldName);
+    if (res == -1) {
+        return -1;
+    }
+    res = rename(old_filename, newName);
     return res;
 }
