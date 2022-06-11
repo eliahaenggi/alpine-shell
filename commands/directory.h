@@ -6,9 +6,13 @@
 #define CLASSIC_C_SHOW_DIR_H
 
 #endif //CLASSIC_C_SHOW_DIR_H
+#include <dirent.h>
 
 //Function shows all files current directory and sets up names_node
-struct names_node show(int argc, char **argv);
+struct names_node show_content();
+
+//Deletes the current names list
+void delete_names_list();
 
 //Contains all the names in current directory
 struct names_node{
@@ -17,8 +21,10 @@ struct names_node{
     struct names_node* next;
 };
 
+void print_current_dir();
+
 // Name and location of the current directory
-char current_location [260];
+//DIR current_directory;
 
 // changes into the newly specified directory
 DIR change_directory(char directory_name [260]);
