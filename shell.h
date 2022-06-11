@@ -1,9 +1,10 @@
-#ifndef SHELL_PROJECT_SHELL_H
-#define SHELL_PROJECT_SHELL_H
-
-void print_prompt1();
-void print_prompt2();
-char *readCommand();
+#ifndef SHELL_H
+#define SHELL_H
 
 
-#endif //SHELL_PROJECT_SHELL_H
+void printPrompt1();
+void printPrompt2();
+char* readCommand();
+int execute();
+
+#endif

@@ -3,13 +3,14 @@
 #include <errno.h>
 #include <string.h>
 #include "shell.h"
-#include "commands/show_dir.h"
+#include "reader.h"
+#include "tokenizer.h"
+#include "reader.h"
 
-
-int start(int argc, char **argv) {
+int main(int argc, char **argv) {
     char *cmd;
-    while(1) {
-        print_prompt1();
+    while (1) {
+        printPrompt1();
         cmd = readCommand();
         if (!cmd) {
             exit(EXIT_SUCCESS);
@@ -22,20 +23,24 @@ int start(int argc, char **argv) {
             free(cmd);
             break;
         }
-        printf("%s\n", cmd);
+        reader reader;
+        reader.cmd = cmd;
+        reader.cmdLength = strlen(cmd);
+        reader.index = -1;
+        execute(&reader);
         free(cmd);
     }
     exit(EXIT_SUCCESS);
 }
 
 char* readCommand() {
-    char buf[1024];
+    char buffer[1024];
     char *ptr = NULL;
     char ptrlen = 0;
 
-    while(fgets(buf, 1024, stdin)) {
-        int buflen = strlen(buf);
-        if(!ptr) {
+    while(fgets(buffer, 1024, stdin)) {
+        int buflen = strlen(buffer);
+        if (!ptr) {
             ptr = malloc(buflen+1);
         } else {
             char *ptr2 = realloc(ptr, ptrlen+buflen+1);
@@ -47,27 +52,49 @@ char* readCommand() {
             }
         }
 
-        if(!ptr) {
+        if (!ptr) {
             fprintf(stderr, "error: failed to alloc buffer: %s\n", strerror(errno));
             return NULL;
         }
 
-        strcpy(ptr+ptrlen, buf);
+        strcpy(ptr+ptrlen, buffer);
 
-        if(buf[buflen-1] == '\n') {
-            if(buflen == 1 || buf[buflen-2] != '\\') {
+        if (buffer[buflen-1] == '\n') {
+            if (buflen == 1 || buffer[buflen-2] != '\\') {
                 return ptr;
             }
             ptr[ptrlen+buflen-2] = '\0';
-            buflen -= 2;
-            print_prompt2();
+            buflen = buflen - 2;
+            printPrompt2();
         }
-        ptrlen += buflen;
+        ptrlen = ptrlen + buflen;
     }
 
     return ptr;
 }
 
-int main(int argc, char **argv) {
-    show(argc, argv);
+int execute(reader *reader) {
+    skipWhiteSpaces(reader);
+
+    struct token *tok = tokenize(reader);
+
+    if (tok == &eof_token) {
+        return 0;
+    }
+    //printf("Whole cmd:\n%s", reader->cmd);
+    //printf("Tokens:\n");
+    while (tok && tok != &eof_token) {
+        // TODO: Execute command
+        //printf("%s|", tok->text);
+        tok = tokenize(reader);
+    }
+    return 0;
+}
+
+void printPrompt1() {
+    fprintf(stderr, "$ ");
+}
+
+void printPrompt2() {
+    fprintf(stderr, "> ");
 }
