@@ -9,7 +9,7 @@
 #include <dirent.h>
 
 //Function shows all files current directory and sets up names_node
-struct names_node show_content();
+struct names_node show_content(char name [260]);
 
 //Deletes the current names list
 void delete_names_list();

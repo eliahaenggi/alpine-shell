@@ -11,8 +11,8 @@ struct names_node *current_files;
 DIR *current_directory;
 
 // function which takes a string of a location, prints the name of all files and directories inside the location,
-// and saves a linked list, containing all filenames
-struct names_node show_content() {
+// and saves a linked list, containing all filenames(called directly by other commands, or with command "show")
+struct names_node show_content(char name[260]) {
     delete_names_list();
     struct names_node *beginning = NULL;
     beginning = (struct names_node *) malloc(sizeof(struct names_node));
@@ -26,7 +26,9 @@ struct names_node show_content() {
     DIR *dir;
 
     // TODO open correct directory and save in global variable
-    if (!(dir = opendir("./."))) {
+    if (current_directory != NULL) {
+        dir = current_directory;
+    } else if (!(dir = opendir(name))) {
         printf("Error, could not find specified folder");
         //return ;
     }
@@ -61,7 +63,7 @@ struct names_node show_content() {
         printf("(%d) %s \r\n", temp->number, temp->name);
     }
     current_files = beginning;
-    current_directory=dir;
+    current_directory = dir;
     print_current_dir();
     return *beginning;
 }
@@ -78,10 +80,11 @@ void delete_names_list() {
 }
 
 void print_current_dir() {
-    DIR *dir;
-    // TODO access directory from global variable
-    dir = opendir("./");
-    printf(dir->dd_name);
+    if (current_directory != NULL) {
+        printf(current_directory->dd_name);
+        return;
+    }
+
 }
 
 DIR change_directory(char directory_name[260]) {

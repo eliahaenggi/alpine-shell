@@ -7,6 +7,7 @@
 #include "tokenizer.h"
 #include "reader.h"
 #include "parser.h"
+#include "commands/directory.h"
 
 int start(int argc, char **argv) {
     char *cmd;
@@ -105,5 +106,10 @@ void printPrompt2() {
 }
 
 int main(int argc, char **argv) {
+    if (argc>1){
+        if(strcmp(argv[1], "direc")==0){
+            show_content("./.");
+        }
+    }
     start(argc, argv);
 }
