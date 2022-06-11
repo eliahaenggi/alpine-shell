@@ -20,6 +20,9 @@ int setOldFileName(char* name) {
     return 0;
 }
 
+/**
+ * Renames file to specified new name. Returns 0 if renaming was successful.
+ */
 int renameFile(char* oldName, char* newName) {
     setOldFileName(oldName);
     int res = rename(old_filename, newName);

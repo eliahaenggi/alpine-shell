@@ -1,3 +1,9 @@
 # Shell-Project
-show
-rename <old-name> <new-name>
+
+##Commands
+- show
+- rename <old-name> <new-name>
+- copy
+- delete
+- showfiles
+- 

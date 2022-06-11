@@ -70,7 +70,7 @@ void setCmdType(cmd* command) {
         command->type = re_name;
         return;
     }
-    if (strcmp(headTok.text,"directory") == 0) {
+    if (strcmp(headTok.text,"show") == 0) {
         command->type = directory;
         return;
     }
