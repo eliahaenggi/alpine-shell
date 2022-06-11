@@ -8,7 +8,7 @@
 #include "reader.h"
 #include "parser.h"
 
-int main(int argc, char **argv) {
+int start(int argc, char **argv) {
     char *cmd;
     while (1) {
         printPrompt1();
@@ -34,18 +34,18 @@ int main(int argc, char **argv) {
     exit(EXIT_SUCCESS);
 }
 
-char* readCommand() {
+char *readCommand() {
     char buffer[1024];
     char *ptr = NULL;
     char ptrlen = 0;
 
-    while(fgets(buffer, 1024, stdin)) {
+    while (fgets(buffer, 1024, stdin)) {
         int buflen = strlen(buffer);
         if (!ptr) {
-            ptr = malloc(buflen+1);
+            ptr = malloc(buflen + 1);
         } else {
-            char *ptr2 = realloc(ptr, ptrlen+buflen+1);
-            if(ptr2) {
+            char *ptr2 = realloc(ptr, ptrlen + buflen + 1);
+            if (ptr2) {
                 ptr = ptr2;
             } else {
                 free(ptr);
@@ -58,13 +58,13 @@ char* readCommand() {
             return NULL;
         }
 
-        strcpy(ptr+ptrlen, buffer);
+        strcpy(ptr + ptrlen, buffer);
 
-        if (buffer[buflen-1] == '\n') {
-            if (buflen == 1 || buffer[buflen-2] != '\\') {
+        if (buffer[buflen - 1] == '\n') {
+            if (buflen == 1 || buffer[buflen - 2] != '\\') {
                 return ptr;
             }
-            ptr[ptrlen+buflen-2] = '\0';
+            ptr[ptrlen + buflen - 2] = '\0';
             buflen = buflen - 2;
             printPrompt2();
         }
@@ -82,12 +82,12 @@ int execute(reader *reader) {
     if (tok == &eof_token) {
         return 0;
     }
-    cmd* command = createCommand();
+    cmd *command = createCommand();
     while (tok && tok != &eof_token) {
         if (command->head && !command->type) {
             setCmdType(command);
         }
-        node* n = createNode(tok);
+        node *n = createNode(tok);
         addNodeToList(n, command);
         tok = tokenize(reader);
     }
@@ -102,4 +102,8 @@ void printPrompt1() {
 
 void printPrompt2() {
     fprintf(stderr, "> ");
+}
+
+int main(int argc, char **argv) {
+    start(argc, argv);
 }
