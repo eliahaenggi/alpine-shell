@@ -1,2 +1,3 @@
 # Shell-Project
-Compile: gcc -o shell main.c tokenizer.c reader.c
+show
+rename <old-name> <new-name>

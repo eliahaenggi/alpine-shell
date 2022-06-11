@@ -10,6 +10,7 @@ cmd* createCommand() {
     cmd* cmdptr = malloc(sizeof(cmd));
     cmdptr->head = NULL;
     cmdptr->type = (cmdType) NULL;
+    cmdptr->length = 0;
     return cmdptr;
 }
 
@@ -42,13 +43,11 @@ node* createNode(struct token* tok) {
  */
 void addNodeToList(node* n, cmd* command) {
     if (!command->head) {
-        printf("Command->head == null\n");
         command->head = n;
         return;
     }
     node* currentNode = command->head;
     while(currentNode->next) {
-        printf("Command->next != null\n");
         currentNode = currentNode->next;
     }
     currentNode->next = n;
@@ -59,7 +58,6 @@ void addNodeToList(node* n, cmd* command) {
  */
 void setCmdType(cmd* command) {
     token headTok = command->head->tok;
-    printf("headTok: %s\n", headTok.text);
     if (strcmp(headTok.text,"delete") == 0) {
         command->type = delete;
         return;
@@ -70,6 +68,10 @@ void setCmdType(cmd* command) {
     }
     if (strcmp(headTok.text,"rename") == 0) {
         command->type = re_name;
+        return;
+    }
+    if (strcmp(headTok.text,"directory") == 0) {
+        command->type = directory;
         return;
     }
     if (strcmp(headTok.text,"showdir") == 0) {

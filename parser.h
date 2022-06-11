@@ -5,7 +5,9 @@
 typedef enum cmdType {
     delete,
     move,
+    copy,
     re_name,
+    directory,
     show_files,
     show_dir,
     error // wrong argument -> TODO: Has to be handled
@@ -19,6 +21,7 @@ typedef struct node {
 typedef struct cmd {
     cmdType type;
     node* head;
+    int length;
 }cmd;
 
 cmd* createCommand();

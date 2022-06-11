@@ -8,6 +8,8 @@
 #include "reader.h"
 #include "parser.h"
 #include "commands/directory.h"
+#include "executor.h"
+#include "commands/rename.h"
 
 int start(int argc, char **argv) {
     char *cmd;
@@ -84,6 +86,7 @@ int execute(reader *reader) {
         return 0;
     }
     cmd *command = createCommand();
+    int commandLength = 0; // Counts length of command
     while (tok && tok != &eof_token) {
         if (command->head && !command->type) {
             setCmdType(command);
@@ -91,8 +94,10 @@ int execute(reader *reader) {
         node *n = createNode(tok);
         addNodeToList(n, command);
         tok = tokenize(reader);
+        commandLength++;
     }
-    //TODO: Call executor with command
+    command->length = commandLength;
+    executeCmd(command);
     freeCommand(command);
     return 0;
 }
@@ -107,9 +112,12 @@ void printPrompt2() {
 
 int main(int argc, char **argv) {
     if (argc>1){
-        if(strcmp(argv[1], "direc")==0){
-            show_content("./.");
+        if(strcmp(argv[1], "rename")==0) {
+            setOldFileName("main.c");
         }
+        //if(strcmp(argv[1], "direc")==0){
+        //    show_content("./.");
+        //}
     }
     start(argc, argv);
 }
