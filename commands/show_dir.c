@@ -8,7 +8,7 @@
 
 DIR current_dir;
 
-//function which takes a string of a location, prints the name of all files and directories inside the location,
+// function which takes a string of a location, prints the name of all files and directories inside the location,
 // and returns an arraylist, containing all filenames
 struct names_node show(int argc, char **argv) {
     struct names_node* beginning= NULL;
