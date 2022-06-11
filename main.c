@@ -6,6 +6,7 @@
 #include "reader.h"
 #include "tokenizer.h"
 #include "reader.h"
+#include "parser.h"
 
 int main(int argc, char **argv) {
     char *cmd;
@@ -81,13 +82,17 @@ int execute(reader *reader) {
     if (tok == &eof_token) {
         return 0;
     }
-    //printf("Whole cmd:\n%s", reader->cmd);
-    //printf("Tokens:\n");
+    cmd* command = createCommand();
     while (tok && tok != &eof_token) {
-        // TODO: Execute command
-        //printf("%s|", tok->text);
+        if (command->head && !command->type) {
+            setCmdType(command);
+        }
+        node* n = createNode(tok);
+        addNodeToList(n, command);
         tok = tokenize(reader);
     }
+    //TODO: Call executor with command
+    freeCommand(command);
     return 0;
 }
 

@@ -11,7 +11,9 @@ char *tok_buf = NULL; // Store token
 int tok_bufsize  = 0; // Store current allocated storage size
 int tok_bufindex = -1; // Current buffer index
 
-/* special token to indicate end of input */
+/**
+ * special token to indicate end of input
+ */
 token eof_token =
         {
                 .length = 0,
@@ -94,7 +96,7 @@ struct token *tokenize(reader *reader) {
         if (nc == '\n') {
             if (tok_bufindex > 0) {
                 decrementIndex(reader);
-            }// else {  Creates additional token with only slash n sign, not sure why.
+            }// else {  //Creates additional token with only slash n sign, not sure why.
             //    addCharToBuffer(nc);
             //}
             break;
