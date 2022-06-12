@@ -3,10 +3,10 @@
 #include <dirent.h>
 
 // the name of the old file
-char old_filename [260];
+static char old_filename [260];
 
 // the location of the old file
-DIR *dir;
+static DIR *dir;
 
 int setOldFileName(char* name);
 

@@ -2,6 +2,7 @@
 #include "parser.h"
 #include "commands/rename.h"
 #include "commands/delete.h"
+#include "commands/directory.h"
 #include <stdio.h>
 
 void executeCmd(cmd* command) {
@@ -38,6 +39,7 @@ void executeCmd(cmd* command) {
         case directory:
             break;
         case show_files:
+            show_content();
             break;
         case show_dir:
             break;
