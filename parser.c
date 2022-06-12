@@ -9,7 +9,7 @@
 cmd* createCommand() {
     cmd* cmdptr = malloc(sizeof(cmd));
     cmdptr->head = NULL;
-    cmdptr->type = (cmdType) NULL;
+    cmdptr->type = error;
     cmdptr->length = 0;
     return cmdptr;
 }

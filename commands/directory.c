@@ -2,9 +2,11 @@
 // Created by Matthew on 10/06/2022.
 //
 
-//#include <dirent.h>
+#include <dirent.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <limits.h>
 #include "directory.h"
 
 char cwd[PATH_MAX];

@@ -88,11 +88,11 @@ int execute(reader *reader) {
     cmd *command = createCommand();
     int commandLength = 0; // Counts length of command
     while (tok && tok != &eof_token) {
-        if (command->head && !command->type) {
-            setCmdType(command);
-        }
         node *n = createNode(tok);
         addNodeToList(n, command);
+        if (commandLength == 0) {
+            setCmdType(command);
+        }
         tok = tokenize(reader);
         commandLength++;
     }
@@ -112,9 +112,6 @@ void printPrompt2() {
 
 int main(int argc, char **argv) {
     if (argc>1){
-        if(strcmp(argv[1], "rename")==0) {
-            setOldFileName("main.c");
-        }
         //if(strcmp(argv[1], "direc")==0){
         //    show_content("./.");
         //}
