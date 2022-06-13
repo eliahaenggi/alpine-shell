@@ -5,19 +5,20 @@
 #ifndef CLASSIC_C_SHOW_DIR_H
 #define CLASSIC_C_SHOW_DIR_H
 
-#endif //CLASSIC_C_SHOW_DIR_H
 #include <dirent.h>
 #include <limits.h>
 
-static char cwd[PATH_MAX];
-static char new_path[PATH_MAX];
-static struct names_node *current_files;
+extern char cwd[PATH_MAX];
+// static char new_path[PATH_MAX];
+extern struct names_node *filesAndDirectories;
+extern struct names_node *files;
+extern struct names_node *directories;
 
 //Function shows all files current directory and sets up names_node
 struct names_node show_content();
 
 //Deletes the current names list
-void delete_names_list();
+void delete_linked_list(struct names_node *pNode);
 
 //Contains all the names in current directory
 struct names_node{
@@ -41,3 +42,6 @@ void change_directory(int number);
 DIR exit_directory();
 
 int make_directory();
+#endif //CLASSIC_C_SHOW_DIR_H
+
+

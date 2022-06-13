@@ -11,6 +11,10 @@
 #include <limits.h>
 #include "directory.h"
 
+char cwd[PATH_MAX];
+struct names_node *filesAndDirectories;
+struct names_node *files;
+struct names_node *directories;
 
 DIR *current_directory;
 struct stat file_info;
@@ -18,7 +22,7 @@ struct stat file_info;
 // function which takes a string of a location, prints the name of all files and directories inside the location,
 // and saves a linked list, containing all filenames(called directly by other commands, or with command "show")
 struct names_node show_content() {
-    delete_names_list();
+    delete_linked_list(filesAndDirectories);
     struct names_node *beginning = NULL;
     beginning = (struct names_node *) malloc(sizeof(struct names_node));
 
@@ -50,6 +54,9 @@ struct names_node show_content() {
                 ep = readdir(dir);
             } else if (strcmp(ep->d_name, "..") == 0) {
                 printf("(%d) \"go out 1 directory\"", i);
+                if (S_ISDIR(file_info.st_mode)) {
+                    printf(" (directory)");
+                }
                 printf("\r\n");
                 strcpy(temp->name, ep->d_name);
                 temp->number = i;
@@ -63,7 +70,7 @@ struct names_node show_content() {
                 stat(ep->d_name, &file_info);
                 if (S_ISREG(file_info.st_mode)) {
                     printf(" (regular file)");
-                } else if (S_ISDIR(file_info.st_mode)){
+                } else if (S_ISDIR(file_info.st_mode)) {
                     printf(" (directory)");
                 }
                 printf("\r\n");
@@ -80,7 +87,7 @@ struct names_node show_content() {
     }
     // TODO delete till return (used for debugging)
 
-    current_files = beginning;
+    filesAndDirectories = beginning;
     current_directory = dir;
     temp = beginning;
 
@@ -89,36 +96,80 @@ struct names_node show_content() {
         //printf("(%d) %s \r\n", temp->number, temp->name);
     }
 
-    strcpy(cwd, getcwd(cwd,PATH_MAX));
+    strcpy(cwd, getcwd(cwd, PATH_MAX));
     print_current_dir();
     return *beginning;
 }
 
-void delete_names_list() {
-    if (current_files == NULL) return;
+int show_files_() {
+    delete_linked_list(files);
+
+    struct names_node *beginning = NULL;
+    beginning = (struct names_node *) malloc(sizeof(struct names_node));
+
+    struct names_node *temp = NULL;
+    temp = (struct names_node *) malloc(sizeof(struct names_node));
+
+    beginning->next = temp;
+
+    DIR *dir;
+
+    dir = opendir(getcwd(cwd, PATH_MAX));
+
+    rewinddir(dir);
+    struct dirent *ep;
+    if (dir == NULL) return -1;
+
+    int i = 0;
+    ep = readdir(dir);
+    while (1) {
+        if (!ep) break;
+        if (S_ISDIR(file_info.st_mode)) {
+            stat(ep->d_name, &file_info);
+            strcpy(temp->name, ep->d_name);
+            temp->number = i;
+            i++;
+            temp->next = (struct names_node *) malloc(sizeof(struct names_node));
+            temp = temp->next;
+        }
+        ep = readdir(dir);
+    }
+
+    printf("directories are:\r\n");
+    directories = beginning;
+    temp=beginning;
+    while (temp->next!=NULL){
+        temp=temp->next;
+        printf("(%d) %s \r\n", temp->number, temp->name);
+    }
+    return 0;
+}
+
+void delete_linked_list(struct names_node *pNode) {
+    if (pNode == NULL) return;
     struct names_node *tmp;
 
-    while (current_files != NULL) {
-        tmp = current_files;
-        current_files = current_files->next;
+    while (filesAndDirectories != NULL) {
+        tmp = filesAndDirectories;
+        filesAndDirectories = filesAndDirectories->next;
         free(tmp);
     }
 }
 
 void print_current_dir() {
     if (current_directory != NULL) {
-        printf("current directory: \r\n %s \r\n",cwd);
+        printf("current directory: \r\n %s \r\n", cwd);
         return;
     }
 
 }
 
 void change_directory(int number) {
-    if (current_directory!=NULL && current_files != NULL){
-        struct names_node *temp = current_files;
-        while (temp->next!=NULL){
-            temp=temp->next;
-            if (temp->number==number){
+    if (current_directory != NULL && filesAndDirectories != NULL) {
+        struct names_node *temp = filesAndDirectories;
+        while (temp->next != NULL) {
+            temp = temp->next;
+            if (temp->number == number) {
                 chdir(temp->name);
                 closedir(current_directory);
                 current_directory = opendir(getcwd(cwd, sizeof cwd));

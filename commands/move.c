@@ -14,9 +14,11 @@ char file_name [FILENAME_MAX];
 /**
  * Return -1, if number is not inside directory (e.g. accessing 100th file in directory with 2)
  * Return 0, if it succeeds
- * Return -2, if current_files is NULL
+ * Return -2, if filesAndDirectories is NULL
  */
 int choose_file(int number){
+    printf("iaopsmdpamsdpmaspdmaspüldmapsdm\r\n");
+    printf(cwd);
     struct names_node c = show_content();
     if (c.next != NULL){
         struct names_node *temp = &c;
@@ -35,8 +37,8 @@ int choose_file(int number){
 }
 
 int choose_destination(int number){
-    if (current_files != NULL){
-        struct names_node *temp = current_files;
+    if (filesAndDirectories != NULL){
+        struct names_node *temp = filesAndDirectories;
         while (temp->next!=NULL){
             temp=temp->next;
             if (temp->number==number){
