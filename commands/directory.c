@@ -217,16 +217,16 @@ void print_current_dir() {
 }
 
 void change_directory(int number) {
-    if (current_directory != NULL && filesAndDirectories != NULL) {
-        struct names_node *temp = filesAndDirectories;
+    if (directories != NULL) {
+        struct names_node *temp = directories;
         while (temp->next != NULL) {
             temp = temp->next;
             if (temp->number == number) {
                 chdir(temp->name);
-                closedir(current_directory);
-                getcwd(cwd, sizeof cwd);
-                current_directory = opendir(cwd);
-                show_content();
+                //closedir(current_directory);
+                //getcwd(cwd, sizeof cwd);
+                //current_directory = opendir(cwd);
+                //show_content();
                 return;
             }
         }

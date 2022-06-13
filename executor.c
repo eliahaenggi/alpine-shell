@@ -6,6 +6,8 @@
 #include "commands/directory.h"
 #include "commands/move.h"
 #include "commands/copy.h"
+#include "commands/number_interface.h"
+#include <stdlib.h>
 
 void executeCmd(cmd* command) {
     int res = 0; // 0 if command executed as expected. Else if execution failed.
@@ -75,6 +77,27 @@ void executeCmd(cmd* command) {
             break;
         case show_dir:
             show_directories();
+            break;
+        case go:
+            printf("Which directory would you like to access?\n");
+            show_directories();
+            change_directory(chooseNum());
+            break;
+        case run:
+            if(command->length<2){
+                printf("Correct command usage: \" run <filename>\"");
+            }else{
+                char rest [PATH_MAX];
+                memset(rest,0, strlen(rest));
+                node *temp = command->head;
+                while (temp->next!=NULL){
+                    temp=temp->next;
+                    strcat(rest, temp->tok.text);
+                    strcat(rest, " ");
+                }
+                rest[strlen(rest)-1] = '\0';
+                system(rest);
+            }
             break;
         case error:
             printf("Command is not known.\n");
