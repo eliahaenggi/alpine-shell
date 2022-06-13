@@ -85,6 +85,12 @@ void setCmdType(cmd* command) {
     if (strcmp(headTok.text,"copy") == 0) {
         command->type = copy;
         return;
+    }if (strcmp(headTok.text,"go") == 0) {
+        command->type = go;
+        return;
+    }if (strcmp(headTok.text,"run") == 0) {
+        command->type = run;
+        return;
     }
     command->type = error;
 }
