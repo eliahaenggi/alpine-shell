@@ -71,8 +71,10 @@ void executeCmd(cmd* command) {
             show_content();
             break;
         case show_files:
+            show_files_();
             break;
         case show_dir:
+            show_directories();
             break;
         case error:
             printf("Command is not known.\n");

@@ -6,10 +6,6 @@
 #include <stdlib.h>
 
 
-char path_origin [PATH_MAX];
-char destination [PATH_MAX];
-char file_name [FILENAME_MAX];
-
 int copyFile() {
     show_files_();
     int num = chooseNum();
