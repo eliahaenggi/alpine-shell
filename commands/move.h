@@ -1,8 +1,9 @@
-//
-// Created by Matthew on 10/06/2022.
-//
+#ifndef MOVE_H
+#define MOVE_H
 
-#ifndef CLASSIC_C_MOVE_H
-#define CLASSIC_C_MOVE_H
+int choose_file(int number);
+int chooseNum();
+int isNumber(char* input);
+int moveFile();
 
-#endif //CLASSIC_C_MOVE_H
+#endif

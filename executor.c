@@ -4,6 +4,7 @@
 #include "commands/delete.h"
 #include <stdio.h>
 #include "commands/directory.h"
+#include "commands/move.h"
 
 void executeCmd(cmd* command) {
     int res = 0; // 0 if command executed as expected. Else if execution failed.
@@ -22,6 +23,9 @@ void executeCmd(cmd* command) {
             break;
         case move:
             printf("move case \n");
+            if (command->length == 1) {
+                chooseNum();
+            }
             break;
         case re_name:
             if (command->length != 3) {
@@ -38,7 +42,7 @@ void executeCmd(cmd* command) {
         case copy:
             break;
         case directory:
-            show_content();
+            //show_content();
             break;
         case show_files:
             break;
