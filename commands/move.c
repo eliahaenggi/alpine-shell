@@ -51,35 +51,65 @@ int choose_destination(int number){
     }
 }
 
-int moveFile();
-
-int chooseNum() {
+int moveFile() {
+    show_content();
+    int num = chooseNum();
+    if (num == -1) { // exit move command
+        return 0;
+    }
+    if (num == -3) { // Input not a number
+        return -1;
+    }
+    choose_file(num);
     while (1) {
-        show_content();
-        printPrompt2();
-        char *command = readCommand();
-        if (strcmp(command, "exit\n") == 0) {
-            free(command);
+        int num = chooseNum();
+        if (num == -1) { // exit move command
             return 0;
         }
-        if (strcmp(command, "\n") == 0) {
-            //moveFile();
-            printf("File should be moved now.\n");
-            free(command);
-            return 0;
+        if (num == -2) { // Enter typed
+            break;
         }
-        command[strlen(command)-1] = '\0'; // cut of \n at the end of command to convert it to int
-        if (!isNumber(command)) {
-            printf("Input should be a number.\n");
+        if (num == -3) { // Input not a number
             return -1;
         }
-        int num = atoi(command);
-        free(command);
-        printf("Directory should be changed now: %d\n", num);
-        //choose_file(num);
+        choose_destination(num);
     }
-
+    char oldPath [strlen(path_origin) + strlen(file_name) + 1];
+    strcpy(oldPath, path_origin);
+    strcat(oldPath, "/");
+    strcat(oldPath,file_name);
+    char newPath [strlen(destination) + strlen(file_name) + 1];
+    strcpy(oldPath, destination);
+    strcat(oldPath, "/");
+    strcat(oldPath,file_name);
+    int res = rename(oldPath, newPath);
+    return res;
 }
+
+
+int chooseNum() {
+    printPrompt2();
+    char *command = readCommand();
+    if (strcmp(command, "exit\n") == 0) {
+        free(command);
+        return -1;
+    }
+    if (strcmp(command, "\n") == 0) {
+        printf("File should be moved now.\n");
+        free(command);
+        return -2;
+    }
+    command[strlen(command)-1] = '\0'; // cut of \n at the end of command to convert it to int
+    if (!isNumber(command)) {
+        printf("Input should be a number.\n");
+        return -3;
+    }
+    int num = atoi(command);
+    free(command);
+    printf("Directory should be changed now: %d\n", num);
+    return num;
+}
+
 
 int isNumber(char* input) {
     for (int i = 0; i < strlen(input); i++) {

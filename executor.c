@@ -24,7 +24,7 @@ void executeCmd(cmd* command) {
         case move:
             printf("move case \n");
             if (command->length == 1) {
-                chooseNum();
+                moveFile();
             }
             break;
         case re_name:

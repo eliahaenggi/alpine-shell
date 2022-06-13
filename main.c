@@ -118,6 +118,6 @@ int main(int argc, char **argv) {
         //}
     }
     //show_content();
-    choose_file(1);
+    //choose_file(1);
     start(argc, argv);
 }

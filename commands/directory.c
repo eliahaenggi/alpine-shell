@@ -86,7 +86,7 @@ struct names_node show_content() {
 
     while (temp->next != NULL) {
         temp = temp->next;
-        printf("(%d) %s \r\n", temp->number, temp->name);
+        //printf("(%d) %s \r\n", temp->number, temp->name);
     }
 
     strcpy(cwd, getcwd(cwd,PATH_MAX));

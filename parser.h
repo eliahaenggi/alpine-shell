@@ -10,7 +10,7 @@ typedef enum cmdType {
     directory,
     show_files,
     show_dir,
-    error // wrong argument -> TODO: Has to be handled
+    error // wrong argument
 }cmdType;
 
 typedef struct node {
