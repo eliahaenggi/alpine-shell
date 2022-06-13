@@ -23,11 +23,11 @@ int moveFile() {
         }
         choose_destination(num);
     }
-    char oldPath [strlen(path_origin) + strlen(file_name) + 1];
+    char oldPath [strlen(path_origin)];
     strcpy(oldPath, path_origin);
     strcat(oldPath, "/");
     strcat(oldPath,file_name);
-    char newPath [strlen(destination) + strlen(file_name) + 1];
+    char newPath [strlen(destination)];
     strcpy(newPath, destination);
     strcat(newPath, "/");
     strcat(newPath,file_name);
