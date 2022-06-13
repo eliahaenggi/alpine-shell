@@ -1,6 +1,6 @@
 # Shell-Project
 
-##Commands
+## Commands
 - rename <old-name> <new-name>
 - delete <name>
 - show

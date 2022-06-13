@@ -2,6 +2,8 @@
 // Created by Matthew on 10/06/2022.
 //
 
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <dirent.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,6 +13,7 @@
 
 struct names_node *current_files;
 DIR *current_directory;
+struct stat file_info;
 
 // function which takes a string of a location, prints the name of all files and directories inside the location,
 // and saves a linked list, containing all filenames(called directly by other commands, or with command "show")
@@ -43,8 +46,8 @@ struct names_node show_content() {
             if (strcmp(ep->d_name, ".") == 0) {
                 ep = readdir(dir);
             } else if (strcmp(ep->d_name, "..") == 0) {
-                //printf("(%d) \"go out 1 directory\"", i);
-                //printf("\r\n");
+                printf("(%d) \"go out 1 directory\"", i);
+                printf("\r\n");
                 strcpy(temp->name, ep->d_name);
                 temp->number = i;
                 ep = readdir(dir);
@@ -53,8 +56,14 @@ struct names_node show_content() {
                 temp = temp->next;
                 i++;
             } else {
-                //printf("(%d) %s", i, ep->d_name);
-                //printf("\r\n");
+                printf("(%d) %s", i, ep->d_name);
+                stat(ep->d_name, &file_info);
+                if (S_ISREG(file_info.st_mode)) {
+                    printf(" (regular file)");
+                } else if (S_ISDIR(file_info.st_mode)){
+                    printf(" (directory)");
+                }
+                printf("\r\n");
                 strcpy(temp->name, ep->d_name);
                 temp->number = i;
                 ep = readdir(dir);
@@ -64,20 +73,21 @@ struct names_node show_content() {
                 i++;
             }
         }
-        temp = NULL;
+        temp->next = NULL;
     }
     // TODO delete till return (used for debugging)
 
     current_files = beginning;
     current_directory = dir;
-    print_current_dir();
     temp = beginning;
 
-    while (temp->next != NULL) {
+    /*while (temp->next != NULL) {
         temp = temp->next;
         printf("(%d) %s \r\n", temp->number, temp->name);
-    }
+    }*/
 
+    strcpy(cwd, getcwd(cwd,PATH_MAX));
+    print_current_dir();
     return *beginning;
 }
 
@@ -94,7 +104,7 @@ void delete_names_list() {
 
 void print_current_dir() {
     if (current_directory != NULL) {
-        printf("current directory: \r\n %s \r\n",current_directory->dd_name);
+        printf("current directory: \r\n %s \r\n",cwd);
         return;
     }
 
