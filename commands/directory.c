@@ -11,7 +11,7 @@
 #include <limits.h>
 #include "directory.h"
 
-struct names_node *current_files;
+
 DIR *current_directory;
 struct stat file_info;
 
@@ -128,3 +128,4 @@ void change_directory(int number) {
         }
     } else printf("WTF HAPPENED?");
 }
+

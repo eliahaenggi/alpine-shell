@@ -11,6 +11,7 @@
 
 static char cwd[PATH_MAX];
 static char new_path[PATH_MAX];
+static struct names_node *current_files;
 
 //Function shows all files current directory and sets up names_node
 struct names_node show_content();
@@ -27,6 +28,9 @@ struct names_node{
 
 void print_current_dir();
 
+int show_directories();
+int show_files();
+
 // Name and location of the current directory
 //DIR current_directory;
 
@@ -35,3 +39,5 @@ void change_directory(int number);
 
 // Exits the current directory and opens the containing one
 DIR exit_directory();
+
+int make_directory();
