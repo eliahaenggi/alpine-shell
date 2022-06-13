@@ -25,11 +25,11 @@ int moveFile() {
     }
     char oldPath [strlen(path_origin) + strlen(file_name) + 1];
     strcpy(oldPath, path_origin);
-    strcat(oldPath, "\\");
+    strcat(oldPath, "/");
     strcat(oldPath,file_name);
     char newPath [strlen(destination) + strlen(file_name) + 1];
     strcpy(newPath, destination);
-    strcat(newPath, "\\");
+    strcat(newPath, "/");
     strcat(newPath,file_name);
     printf("OldPath: %s\n", oldPath);
     printf("NewPath: %s\n", newPath);

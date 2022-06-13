@@ -40,7 +40,8 @@ int choose_destination(int number){
             temp=temp->next;
             if (temp->number==number){
                 chdir(temp->name);
-                strcpy(destination, getcwd(cwd, PATH_MAX));
+                getcwd(cwd, PATH_MAX);
+                strcpy(destination, cwd);
                 return 0;
             }
         } return -1;

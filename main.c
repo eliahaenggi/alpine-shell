@@ -117,9 +117,8 @@ int main(int argc, char **argv) {
         //    show_content("./.");
         //}
     }
-    show_content();
-    show_directories();
-    show_files_();
-    //choose_file(1);
+    //show_content();
+    //show_files_();
+    //show_directories();
     start(argc, argv);
 }
