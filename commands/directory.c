@@ -84,10 +84,10 @@ struct names_node show_content() {
     current_directory = dir;
     temp = beginning;
 
-    /*while (temp->next != NULL) {
+    while (temp->next != NULL) {
         temp = temp->next;
         printf("(%d) %s \r\n", temp->number, temp->name);
-    }*/
+    }
 
     strcpy(cwd, getcwd(cwd,PATH_MAX));
     print_current_dir();

@@ -17,8 +17,9 @@ char file_name [FILENAME_MAX];
  * Return -2, if current_files is NULL
  */
 int choose_file(int number){
-    if (current_files != NULL){
-        struct names_node *temp = current_files;
+    struct names_node c = show_content();
+    if (c.next != NULL){
+        struct names_node *temp = &c;
         while (temp->next!=NULL){
             temp=temp->next;
             if (temp->number==number){

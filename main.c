@@ -10,6 +10,7 @@
 #include "commands/directory.h"
 #include "executor.h"
 #include "commands/rename.h"
+#include "commands/move.h"
 
 int start(int argc, char **argv) {
     char *cmd;
@@ -116,6 +117,7 @@ int main(int argc, char **argv) {
         //    show_content("./.");
         //}
     }
-    show_content();
+    //show_content();
+    choose_file(1);
     start(argc, argv);
 }

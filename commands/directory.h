@@ -29,7 +29,7 @@ struct names_node{
 void print_current_dir();
 
 int show_directories();
-int show_files();
+int show_files_();
 
 // Name and location of the current directory
 //DIR current_directory;
