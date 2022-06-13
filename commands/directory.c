@@ -34,9 +34,12 @@ struct names_node show_content() {
         dir = current_directory;
     } else if (!(dir = opendir("./."))) {
         printf("Error, could not find specified folder");
+        //TODO add error handling
+
         // return ;
     }
     //print_current_dir();
+    rewinddir(dir);
     struct dirent *ep;
 
     if (dir != NULL) {
