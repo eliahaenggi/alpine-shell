@@ -108,9 +108,8 @@ int show_files_() {
     beginning = (struct names_node *) malloc(sizeof(struct names_node));
 
     struct names_node *temp = NULL;
-    temp = (struct names_node *) malloc(sizeof(struct names_node));
 
-    beginning->next = temp;
+    temp=beginning;
 
     DIR *dir;
 
@@ -126,16 +125,16 @@ int show_files_() {
         if (!ep) break;
         stat(ep->d_name, &file_info);
         if (S_ISREG(file_info.st_mode)) {
+            temp->next = (struct names_node *) malloc(sizeof(struct names_node));
+            temp = temp->next;
             strcpy(temp->name, ep->d_name);
             temp->number = i;
             i++;
-            temp->next = (struct names_node *) malloc(sizeof(struct names_node));
-            temp = temp->next;
         }
         ep = readdir(dir);
     }
-    free(temp);
-    temp=NULL;
+    //free(temp);
+    temp->next=NULL;
 
     printf("directories are:\r\n");
     files = beginning;
