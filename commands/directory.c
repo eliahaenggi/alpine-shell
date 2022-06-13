@@ -53,33 +53,30 @@ struct names_node show_content() {
             if (strcmp(ep->d_name, ".") == 0) {
                 ep = readdir(dir);
             } else if (strcmp(ep->d_name, "..") == 0) {
-                printf("(%d) \"go out 1 directory\"\n", i);
+                printf("(%d) \"go out 1 directory\"", i);
                 if (S_ISDIR(file_info.st_mode)) {
-                    printf(" (directory)\n");
+                    printf(" (directory)");
                 }
+                printf("\r\n");
                 strcpy(temp->name, ep->d_name);
                 temp->number = i;
                 ep = readdir(dir);
-                if (!ep) {
-                    break;
-                }
+                if (!ep) break;
                 temp->next = (struct names_node *) malloc(sizeof(struct names_node));
                 temp = temp->next;
                 i++;
             } else {
-                printf("(%d) %s", i, ep->d_name);
                 stat(ep->d_name, &file_info);
                 if (S_ISREG(file_info.st_mode)) {
-                    printf(" (regular file)\n");
+                    printf("(%d) %s", i, ep->d_name);
                 } else if (S_ISDIR(file_info.st_mode)) {
-                    printf(" (directory)\n");
+                    printf("\033[0;36m(%d) %s\033[0m", i, ep->d_name);
                 }
+                printf("\r\n");
                 strcpy(temp->name, ep->d_name);
                 temp->number = i;
                 ep = readdir(dir);
-                if (!ep) {
-                    break;
-                }
+                if (!ep) break;
                 temp->next = (struct names_node *) malloc(sizeof(struct names_node));
                 temp = temp->next;
                 i++;
@@ -92,10 +89,12 @@ struct names_node show_content() {
     filesAndDirectories = beginning;
     current_directory = dir;
     temp = beginning;
+
     while (temp->next != NULL) {
         temp = temp->next;
         //printf("(%d) %s \r\n", temp->number, temp->name);
     }
+
     getcwd(cwd, PATH_MAX);
     print_current_dir();
     return *beginning;
@@ -112,7 +111,6 @@ int show_files_() {
     temp = beginning;
 
     DIR *dir;
-
     getcwd(cwd, PATH_MAX);
     dir = opendir(cwd);
 
@@ -158,6 +156,7 @@ int show_directories() {
     temp = beginning;
 
     DIR *dir;
+
     getcwd(cwd, PATH_MAX);
     dir = opendir(cwd);
 
@@ -205,7 +204,6 @@ void delete_linked_list(struct names_node *pNode) {
         filesAndDirectories = filesAndDirectories->next;
         free(tmp);
     }
-    free(pNode);
 }
 
 void print_current_dir() {
@@ -217,16 +215,15 @@ void print_current_dir() {
 }
 
 void change_directory(int number) {
-    if (directories != NULL) {
-        struct names_node *temp = directories;
+    if (current_directory != NULL && filesAndDirectories != NULL) {
+        struct names_node *temp = filesAndDirectories;
         while (temp->next != NULL) {
             temp = temp->next;
             if (temp->number == number) {
                 chdir(temp->name);
-                //closedir(current_directory);
-                //getcwd(cwd, sizeof cwd);
-                //current_directory = opendir(cwd);
-                //show_content();
+                closedir(current_directory);
+                current_directory = opendir(getcwd(cwd, sizeof cwd));
+                show_content();
                 return;
             }
         }
