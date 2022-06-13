@@ -61,7 +61,8 @@ int moveFile() {
     }
     choose_file(num);
     while (1) {
-        int num = chooseNum();
+        show_content();
+        num = chooseNum();
         if (num == -1) { // exit move command
             return 0;
         }
@@ -75,12 +76,14 @@ int moveFile() {
     }
     char oldPath [strlen(path_origin) + strlen(file_name) + 1];
     strcpy(oldPath, path_origin);
-    strcat(oldPath, "/");
+    strcat(oldPath, "\\");
     strcat(oldPath,file_name);
     char newPath [strlen(destination) + strlen(file_name) + 1];
     strcpy(oldPath, destination);
-    strcat(oldPath, "/");
+    strcat(oldPath, "\\");
     strcat(oldPath,file_name);
+    printf("OldPath: %s\n", oldPath);
+    printf("NewPath: %s\n", oldPath);
     int res = rename(oldPath, newPath);
     return res;
 }
@@ -94,7 +97,6 @@ int chooseNum() {
         return -1;
     }
     if (strcmp(command, "\n") == 0) {
-        printf("File should be moved now.\n");
         free(command);
         return -2;
     }
@@ -105,7 +107,7 @@ int chooseNum() {
     }
     int num = atoi(command);
     free(command);
-    printf("Directory should be changed now: %d\n", num);
+    printf("Selected Number: %d\n", num);
     return num;
 }
 

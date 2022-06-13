@@ -22,9 +22,23 @@ void executeCmd(cmd* command) {
             }
             break;
         case move:
-            printf("move case \n");
             if (command->length == 1) {
-                moveFile();
+                res = moveFile();
+                if (res != 0) {
+                    printf("File could not be moved.\n");
+                    return;
+                }
+                printf("Moved file successfully.\n");
+            } else if (command->length == 3) {
+                res = renameFile(command->head->next->tok.text, command->head->next->next->tok.text); // call second and third node of command linked list
+                if (res == 0) {
+                    printf("File moved successfully.\n");
+                } else {
+                    printf("File could not be moved.\n");
+                }
+            } else {
+                printf("Invalid number of arguments for rename.\n");
+                return;
             }
             break;
         case re_name:
