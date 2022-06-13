@@ -34,8 +34,8 @@ int choose_file(int number){
 }
 
 int choose_destination(int number){
-    if (filesAndDirectories != NULL){
-        struct names_node *temp = filesAndDirectories;
+    if (directories != NULL){
+        struct names_node *temp = directories;
         while (temp->next!=NULL){
             temp=temp->next;
             if (temp->number==number){
