@@ -39,6 +39,7 @@ int choose_destination(int number){
         while (temp->next!=NULL){
             temp=temp->next;
             if (temp->number==number){
+                chdir(temp->name);
                 strcpy(destination, getcwd(cwd, PATH_MAX));
                 return 0;
             }
