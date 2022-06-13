@@ -82,6 +82,10 @@ void setCmdType(cmd* command) {
         command->type = show_files;
         return;
     }
+    if (strcmp(headTok.text,"copy") == 0) {
+        command->type = copy;
+        return;
+    }
     command->type = error;
 }
 

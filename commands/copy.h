@@ -1,22 +1,7 @@
-//
-// Created by Matthew on 11/06/2022.
-//
+#ifndef COPY_H
+#define COPY_H
 
-#include <dirent.h>
+int copyFile();
+int copyFiles(char* source_file, char* target_file);
 
-#ifndef CLASSIC_C_COPY_H
-#define CLASSIC_C_COPY_H
-
-#endif //CLASSIC_C_COPY_H
-
-// the name of the file to move
-char filename_to_move [260];
-
-// the name of the new file
-char new_filename [260];
-
-// the location of the file
-DIR *old_dir;
-
-// The location of the new file
-DIR *new_dir;
+#endif COPY_H

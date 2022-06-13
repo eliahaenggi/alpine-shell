@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "commands/directory.h"
 #include "commands/move.h"
+#include "commands/copy.h"
 
 void executeCmd(cmd* command) {
     int res = 0; // 0 if command executed as expected. Else if execution failed.
@@ -37,7 +38,7 @@ void executeCmd(cmd* command) {
                     printf("File could not be moved.\n");
                 }
             } else {
-                printf("Invalid number of arguments for rename.\n");
+                printf("Invalid number of arguments for move.\n");
                 return;
             }
             break;
@@ -54,9 +55,20 @@ void executeCmd(cmd* command) {
             }
             break;
         case copy:
+            if (command->length == 1) {
+                res = copyFile();
+                if (res != 0) {
+                    printf("File could not be copied.\n");
+                    return;
+                }
+                printf("Copied file successfully.\n");
+            } else {
+                printf("Invalid number of arguments for copy.\n");
+                return;
+            }
             break;
         case directory:
-            //show_content();
+            show_content();
             break;
         case show_files:
             break;
