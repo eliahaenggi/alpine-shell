@@ -124,8 +124,8 @@ int show_files_() {
     ep = readdir(dir);
     while (1) {
         if (!ep) break;
-        if (S_ISDIR(file_info.st_mode)) {
-            stat(ep->d_name, &file_info);
+        stat(ep->d_name, &file_info);
+        if (S_ISREG(file_info.st_mode)) {
             strcpy(temp->name, ep->d_name);
             temp->number = i;
             i++;
@@ -134,9 +134,11 @@ int show_files_() {
         }
         ep = readdir(dir);
     }
+    free(temp);
+    temp=NULL;
 
     printf("directories are:\r\n");
-    directories = beginning;
+    files = beginning;
     temp=beginning;
     while (temp->next!=NULL){
         temp=temp->next;
