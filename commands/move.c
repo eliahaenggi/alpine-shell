@@ -17,11 +17,8 @@ char file_name [FILENAME_MAX];
  * Return -2, if filesAndDirectories is NULL
  */
 int choose_file(int number){
-    printf("iaopsmdpamsdpmaspdmaspüldmapsdm\r\n");
-    printf(cwd);
-    struct names_node c = show_content();
-    if (c.next != NULL){
-        struct names_node *temp = &c;
+    if (files->next != NULL){
+        struct names_node *temp = files;
         while (temp->next!=NULL){
             temp=temp->next;
             if (temp->number==number){
@@ -54,7 +51,7 @@ int choose_destination(int number){
 }
 
 int moveFile() {
-    show_content();
+    show_files_();
     int num = chooseNum();
     if (num == -1) { // exit move command
         return 0;

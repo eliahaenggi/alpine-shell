@@ -118,6 +118,7 @@ int main(int argc, char **argv) {
         //}
     }
     show_content();
+    show_directories();
     show_files_();
     //choose_file(1);
     start(argc, argv);

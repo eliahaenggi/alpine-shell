@@ -109,7 +109,7 @@ int show_files_() {
 
     struct names_node *temp = NULL;
 
-    temp=beginning;
+    temp = beginning;
 
     DIR *dir;
 
@@ -134,14 +134,63 @@ int show_files_() {
         ep = readdir(dir);
     }
     //free(temp);
-    temp->next=NULL;
+    temp->next = NULL;
 
-    printf("directories are:\r\n");
+    printf("files are:\r\n");
     files = beginning;
-    temp=beginning;
-    while (temp->next!=NULL){
-        temp=temp->next;
+    temp = beginning;
+    while (temp->next != NULL) {
+        temp = temp->next;
         printf("(%d) %s \r\n", temp->number, temp->name);
+    }
+    return 0;
+}
+
+int show_directories() {
+    delete_linked_list(directories);
+
+    struct names_node *beginning = NULL;
+    beginning = (struct names_node *) malloc(sizeof(struct names_node));
+
+    struct names_node *temp = NULL;
+
+    temp = beginning;
+
+    DIR *dir;
+
+    dir = opendir(getcwd(cwd, PATH_MAX));
+
+    printf("current directory: %s", getcwd(cwd, PATH_MAX));
+
+    rewinddir(dir);
+    struct dirent *ep;
+    if (dir == NULL) return -1;
+
+    int i = 0;
+    ep = readdir(dir);
+    while (1) {
+        if (!ep) break;
+        stat(ep->d_name, &file_info);
+        if (S_ISDIR(file_info.st_mode) && strcmp(ep->d_name, ".") != 0) {
+            temp->next = (struct names_node *) malloc(sizeof(struct names_node));
+            temp = temp->next;
+            strcpy(temp->name, ep->d_name);
+            temp->number = i;
+            i++;
+
+        }
+        ep = readdir(dir);
+    }
+    //free(temp);
+    temp->next = NULL;
+
+    printf("directories inside are:\r\n");
+    directories = beginning;
+    temp = beginning;
+    while (temp->next != NULL) {
+        temp = temp->next;
+        if (strcmp(temp->name, "..") == 0) printf("(%d) \"go out by one directory\"\r\n", temp->number);
+        else printf("(%d) %s \r\n", temp->number, temp->name);
     }
     return 0;
 }
