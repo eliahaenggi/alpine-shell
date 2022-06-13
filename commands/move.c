@@ -3,3 +3,8 @@
 //
 
 #include "move.h"
+#include "directory.h"
+
+int choose_file(int number){
+    DIR* dir = getcwd(cwd, PATH_MAX);
+}

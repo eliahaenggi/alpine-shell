@@ -116,5 +116,6 @@ int main(int argc, char **argv) {
         //    show_content("./.");
         //}
     }
+    show_content();
     start(argc, argv);
 }

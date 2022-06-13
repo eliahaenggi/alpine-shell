@@ -7,6 +7,9 @@
 
 #endif //CLASSIC_C_SHOW_DIR_H
 #include <dirent.h>
+#include <limits.h>
+
+static char cwd[PATH_MAX];
 
 //Function shows all files current directory and sets up names_node
 struct names_node show_content();

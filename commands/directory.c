@@ -9,8 +9,6 @@
 #include <limits.h>
 #include "directory.h"
 
-char cwd[PATH_MAX];
-
 struct names_node *current_files;
 DIR *current_directory;
 
@@ -33,8 +31,9 @@ struct names_node show_content() {
         dir = current_directory;
     } else if (!(dir = opendir("./."))) {
         printf("Error, could not find specified folder");
-        //return ;
+        // return ;
     }
+    //print_current_dir();
     struct dirent *ep;
 
     if (dir != NULL) {
@@ -44,8 +43,8 @@ struct names_node show_content() {
             if (strcmp(ep->d_name, ".") == 0) {
                 ep = readdir(dir);
             } else if (strcmp(ep->d_name, "..") == 0) {
-                printf("(%d) \"go out 1 directory\"", i);
-                printf("\r\n");
+                //printf("(%d) \"go out 1 directory\"", i);
+                //printf("\r\n");
                 strcpy(temp->name, ep->d_name);
                 temp->number = i;
                 ep = readdir(dir);
@@ -54,8 +53,8 @@ struct names_node show_content() {
                 temp = temp->next;
                 i++;
             } else {
-                printf("(%d) %s", i, ep->d_name);
-                printf("\r\n");
+                //printf("(%d) %s", i, ep->d_name);
+                //printf("\r\n");
                 strcpy(temp->name, ep->d_name);
                 temp->number = i;
                 ep = readdir(dir);
@@ -68,18 +67,17 @@ struct names_node show_content() {
         temp = NULL;
     }
     // TODO delete till return (used for debugging)
+
+    current_files = beginning;
+    current_directory = dir;
+    print_current_dir();
     temp = beginning;
-    /**
+
     while (temp->next != NULL) {
         temp = temp->next;
         printf("(%d) %s \r\n", temp->number, temp->name);
     }
 
-
-    **/
-    current_files = beginning;
-    current_directory = dir;
-    //print_current_dir();
     return *beginning;
 }
 
