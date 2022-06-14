@@ -6,6 +6,7 @@
 #define CLASSIC_C_LOGGER_H
 #include <stdlib.h>
 #include <stdio.h>
+#include <limits.h>
 
 extern FILE *file;
 extern char fileLocation [PATH_MAX + FILENAME_MAX];
