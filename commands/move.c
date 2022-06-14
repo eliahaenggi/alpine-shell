@@ -5,10 +5,16 @@
 #include <stdio.h>
 
 
+/**
+ * Moves a file according to the user input in chooseNum().
+ *
+ * @return 0 if file move was successful, not 0 if failed
+ */
+
 int moveFile() {
     show_files_();
     int num = chooseNum();
-    if (num == -1) { // exit move command or wrong input
+    if (num == -1 || num == -2) { // exit move command or wrong input
         return -1;
     }
     choose_file(num);

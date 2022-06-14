@@ -100,7 +100,7 @@ struct names_node show_content() {
     return *beginning;
 }
 
-int show_files_() {
+int show_files_(int numeration) {
     delete_linked_list(files);
 
     struct names_node *beginning = NULL;
@@ -135,17 +135,21 @@ int show_files_() {
     //free(temp);
     temp->next = NULL;
 
-    printf("files are:\r\n");
+    printf("\r\n");
     files = beginning;
     temp = beginning;
     while (temp->next != NULL) {
         temp = temp->next;
-        printf("(%d) %s \r\n", temp->number, temp->name);
+        if (numeration) {
+            printf("(%d) %s \r\n", temp->number, temp->name);
+        } else {
+            printf(" %s \r\n",  temp->name);
+        }
     }
     return 0;
 }
 
-int show_directories() {
+int show_directories(int numeration) {
     delete_linked_list(directories);
 
     struct names_node *beginning = NULL;
@@ -184,13 +188,19 @@ int show_directories() {
     //free(temp);
     temp->next = NULL;
 
-    printf("directories inside are:\r\n");
+    printf("\r\n");
     directories = beginning;
     temp = beginning;
     while (temp->next != NULL) {
         temp = temp->next;
-        if (strcmp(temp->name, "..") == 0) printf("(%d) \"go out by one directory\"\r\n", temp->number);
-        else printf("(%d) %s \r\n", temp->number, temp->name);
+        if (numeration) {
+            if (strcmp(temp->name, "..") == 0) printf("(%d) \"go out by one directory\"\r\n", temp->number);
+            else printf("(%d) %s \r\n", temp->number, temp->name);
+        } else {
+            if (strcmp(temp->name, "..") != 0) {
+                printf(" %s \r\n", temp->name);
+            }
+        }
     }
     return 0;
 }

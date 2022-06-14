@@ -5,11 +5,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
+/**opy
+ * Copies a file according to the user input in chooseNum(). Uses copyFiles().
+ *
+ * @return 0 if file copy was successful, not 0 if failed
+ */
 int copyFile() {
     show_files_();
     int num = chooseNum();
-    if (num == -1) { // exit move command or wrong input
+    if (num == -1 || num == -2) { // exit move command or wrong input
         return -1;
     }
     choose_file(num);
@@ -24,13 +28,13 @@ int copyFile() {
         }
         choose_destination(num);
     }
-    char oldPath [strlen(path_origin) + strlen(file_name) + 1];
+    char oldPath [strlen(path_origin)];
     strcpy(oldPath, path_origin);
-    strcat(oldPath, "\\");
+    strcat(oldPath, "/");
     strcat(oldPath,file_name);
-    char newPath [strlen(destination) + strlen(file_name) + 1];
+    char newPath [strlen(destination)];
     strcpy(newPath, destination);
-    strcat(newPath, "\\");
+    strcat(newPath, "/");
     strcat(newPath,file_name);
     printf("OldPath: %s\n", oldPath);
     printf("NewPath: %s\n", newPath);
@@ -38,6 +42,14 @@ int copyFile() {
     return res;
 }
 
+
+/**
+ * Reads the informaton in source_file and writes them into the specified address of copied_file.
+ *
+ * @param source_file path of file to copy
+ * @param copied_file path of copied file
+ * @return 0 if copy was successful.
+ */
 int copyFiles(char* source_file, char* copied_file) {
     char data;
     FILE* source = fopen(source_file, "r");

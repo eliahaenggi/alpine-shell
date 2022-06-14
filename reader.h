@@ -2,19 +2,17 @@
 #define READER_H
 
 #define EOF             (-1)
-#define ERRCHAR         ( 0)
-
 
 typedef struct reader
 {
-    char *cmd; // whole command
+    char* cmd; // string containing the whole command
     long cmdLength; // size of the command
-    long index; // index position in command
+    long index; // position that signals which chars are already read
 }reader;
 
-char incrementIndex(reader *reader);
-void decrementIndex(reader *reader);
-char getChar(reader *reader);
-void skipWhiteSpaces(reader *reader);
+char incrementIndex(reader* reader);
+void decrementIndex(reader* reader);
+char getChar(reader* reader);
+void skipWhiteSpaces(reader* reader);
 
-#endif //SHELL_PROJECT_READER_H
+#endif

@@ -12,6 +12,7 @@ typedef enum cmdType {
     show_dir,
     go,
     run,
+    help,
     error // wrong argument
 }cmdType;
 

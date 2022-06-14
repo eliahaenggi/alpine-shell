@@ -7,12 +7,12 @@
 #include "reader.h"
 
 
-char *tok_buf = NULL; // Store token
-int tok_bufsize  = 0; // Store current allocated storage size
-int tok_bufindex = -1; // Current buffer index
+char* tokenText = NULL; // Store token
+int tokenSize  = 0; // Store current allocated storage size
+int tokenTextSize = -1; // Current text size
 
 /**
- * special token to indicate end of input
+ * Token with length == 0 to indicate end of input.
  */
 token eof_token =
         {
@@ -20,23 +20,23 @@ token eof_token =
         };
 
 /**
- * Add Char to buffer. If bufindex equals bufsize, double bufsize.
+ * Add Char to tokenText. If text size equals allocated storage, double storage size.
  */
-void addCharToBuffer(char c) {
-    tok_buf[tok_bufindex] = c;
-    tok_bufindex++;
+void addCharToToken(char c) {
+    tokenText[tokenTextSize] = c;
+    tokenTextSize++;
 
-    if (tok_bufindex >= tok_bufsize) {
-        tok_bufsize = 2 * tok_bufindex;
-        char *tmp = realloc(tok_buf, tok_bufsize);
-        tok_buf = tmp;
+    if (tokenTextSize >= tokenSize) {
+        tokenSize = 2 * tokenTextSize;
+        char *tmp = realloc(tokenText, tokenSize);
+        tokenText = tmp;
     }
 }
 
 /**
- * Creates a new token struct with str as text and length.
+ * Creates a new token struct with specified string as tokenText.
  */
-token *createToken(char *str) {
+token* createToken(char* str) {
     token *tok = malloc(sizeof(token));
 
     memset(tok, 0, sizeof(token)); // fills tok with zeros
@@ -60,89 +60,53 @@ void freeToken(token *tok) {
 }
 
 /**
- * Creates a new token with src struct. Calls createToken.
+ * Creates a new token with specified reader. Calls createToken().
  */
-struct token *tokenize(reader *reader) {
-    //int endloop = 0;
-
-    // Define tok_buf
-    if (!tok_buf) {
-        tok_bufsize = 1024;
-        tok_buf = malloc(tok_bufsize);
-        if (!tok_buf) {
-            errno = ENOMEM;
-            return &eof_token;
-        }
+struct token* tokenize(reader *reader) {
+    // Define tokenText
+    if (!tokenText) {
+        tokenSize = 512;
+        tokenText = malloc(512 * sizeof(char));
     }
 
-    tok_bufindex = 0;
-    tok_buf[0] = '\0';
+    tokenTextSize = 0;
+    tokenText[0] = '\0';
 
-    char nc = incrementIndex(reader);
+    char ch = incrementIndex(reader);
 
-    if (nc == ERRCHAR || nc == EOF) {
+    if (ch == EOF) {
         return &eof_token;
     }
 
     while (1) {
-        if (nc == EOF) {
+        if (ch == EOF) {
             break;
         }
-        if (nc == ' '|| nc == '\t') {
-            if (tok_bufindex > 0) {
+        if (ch == ' ' || ch == '\t') {
+            if (tokenTextSize > 0) {
                 break;
             }
         }
-        if (nc == '\n') {
-            if (tok_bufindex > 0) {
+        if (ch == '\n') {
+            if (tokenTextSize > 0) {
                 decrementIndex(reader);
-            }// else {  //Creates additional token with only slash n sign, not sure why.
-            //    addCharToBuffer(nc);
-            //}
+            }
             break;
         }
-        addCharToBuffer(nc);
-        nc = incrementIndex(reader);
+        addCharToToken(ch);
+        ch = incrementIndex(reader);
     }
-/*
-    do {
-        switch(nc) {
-            case ' ':
-            case '\t': // Check for tab character
-                if (tok_bufindex > 0) {
-                    endloop = 1;
-                }
-                break;
 
-            case '\n': // Check for newline character
-                if (tok_bufindex > 0) {
-                    decreaseIndex(src);
-                } else {
-                    addCharToBuffer(nc);
-                }
-                endloop = 1;
-                break;
-
-            default:
-                addCharToBuffer(nc);
-                break;
-        }
-
-        if (endloop) {
-            break;
-        }
-
-    } while ((nc = increaseIndex(src)) != EOF);
-*/
-    if (tok_bufindex == 0) {
+    if (tokenTextSize == 0) {
         return &eof_token;
     }
 
-    if (tok_bufindex >= tok_bufsize) {
-        tok_bufindex--;
+    if (tokenTextSize >= tokenSize) {
+        tokenTextSize--;
     }
-    tok_buf[tok_bufindex] = '\0';
-    token *tok = createToken(tok_buf);
+
+    tokenText[tokenTextSize] = '\0';
+    token *tok = createToken(tokenText);
     tok->reader = reader;
     return tok;
 }

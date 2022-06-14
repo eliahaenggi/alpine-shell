@@ -33,6 +33,11 @@ int choose_file(int number){
     }
 }
 
+/**
+ * Return -1, if number is not inside directory (e.g. accessing 100th file in directory with 2)
+ * Return 0, if it succeeds
+ * Return -2, if filesAndDirectories is NULL
+ */
 int choose_destination(int number){
     if (directories != NULL){
         struct names_node *temp = directories;
@@ -51,7 +56,11 @@ int choose_destination(int number){
     }
 }
 
-
+/**
+ * Takes the input of the user. Checks if input is number.
+ *
+ * @return Number entered by the user
+ */
 int chooseNum() {
     printPrompt2();
     char *command = readCommand();
@@ -74,7 +83,9 @@ int chooseNum() {
     return num;
 }
 
-
+/**
+ * Checks if input string is a number. Used to convert string to int afterwards.
+ */
 int isNumber(char* input) {
     for (int i = 0; i < strlen(input); i++) {
         if (!isdigit(input[i])) {

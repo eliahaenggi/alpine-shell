@@ -3,9 +3,9 @@
 #include "reader.h"
 
 /**
- * Returns char at current index and increments index field
+ * Increments index and returns char at current position.
  */
-char incrementIndex(reader *reader) {
+char incrementIndex(reader* reader) {
     reader->index++;
     if (reader->index >= reader->cmdLength) {
         reader->index = reader->cmdLength;
@@ -16,9 +16,9 @@ char incrementIndex(reader *reader) {
 }
 
 /**
- * Decrements Index field by one
+ * Decrements Index field. If index is -1 it stays the same.
  */
-void decrementIndex(reader *reader) {
+void decrementIndex(reader* reader) {
     if (reader->index < 0) {
         return;
     }
@@ -26,13 +26,9 @@ void decrementIndex(reader *reader) {
 }
 
 /**
- * Returns char at current index
+ * Returns char at current index. Index is not incremented.
  */
-char getChar(reader *reader) {
-    if (!reader || !reader->cmd) {
-        return ERRCHAR;
-    }
-
+char getChar(reader* reader) {
     long pos = reader->index;
     pos++;
 
@@ -44,15 +40,15 @@ char getChar(reader *reader) {
 }
 
 /**
- * Increments index until char is no white space anymore
+ * Increments index until char is no white space anymore.
  */
-void skipWhiteSpaces(reader *reader) {
+void skipWhiteSpaces(reader* reader) {
     if (!reader || !reader->cmd) {
         return;
     }
     char c = getChar(reader);
     while (c != EOF) {
-        if (c != ' ' && c != '\t') { // Break if char is no white space
+        if (c != ' ' && c != '\t') { // Break if char is no white space or tab
             break;
         }
         c = incrementIndex(reader);
