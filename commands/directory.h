@@ -15,7 +15,7 @@ extern struct names_node *files;
 extern struct names_node *directories;
 
 //Function shows all files current directory and sets up names_node
-struct names_node show_content();
+int show_content();
 
 //Deletes the current names list
 void delete_linked_list(struct names_node *pNode);

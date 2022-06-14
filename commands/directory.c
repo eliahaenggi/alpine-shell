@@ -21,30 +21,24 @@ struct stat file_info;
 
 // function which takes a string of a location, prints the name of all files and directories inside the location,
 // and saves a linked list, containing all filenames(called directly by other commands, or with command "show")
-struct names_node show_content() {
-    delete_linked_list(filesAndDirectories);
+int show_content() {
+    delete_linked_list(files);
+
     struct names_node *beginning = NULL;
     beginning = (struct names_node *) malloc(sizeof(struct names_node));
 
     struct names_node *temp = NULL;
-    temp = (struct names_node *) malloc(sizeof(struct names_node));
 
-    beginning->next = temp;
+    temp = beginning;
 
     DIR *dir;
+    getcwd(cwd, PATH_MAX);
+    dir = opendir(cwd);
 
-    // TODO open correct directory and save in global variable
-    if (current_directory != NULL) {
-        dir = current_directory;
-    } else if (!(dir = opendir("./."))) {
-        printf("Error, could not find specified folder");
-        //TODO add error handling
-
-        // return ;
-    }
-    //print_current_dir();
     rewinddir(dir);
     struct dirent *ep;
+
+    if (dir==NULL) return -1;
 
     if (dir != NULL) {
         int i = 0;
@@ -96,7 +90,7 @@ struct names_node show_content() {
     }
 
     getcwd(cwd, PATH_MAX);
-    return *beginning;
+    return 0;
 }
 
 int show_files_(int numeration) {
