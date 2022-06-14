@@ -79,7 +79,6 @@ int chooseNum() {
     }
     int num = atoi(command);
     free(command);
-    printf("Selected Number: %d\n", num);
     return num;
 }
 

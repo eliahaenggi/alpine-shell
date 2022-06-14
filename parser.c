@@ -22,7 +22,6 @@ void freeCommand(cmd* command) {
     while(currentNode->next) {
         node* lastNode = currentNode;
         currentNode = currentNode->next;
-        freeToken(&currentNode->tok);
         free(lastNode);
     }
     free(currentNode);

@@ -12,14 +12,14 @@
  */
 
 int moveFile() {
-    show_files_();
+    show_files_(1);
     int num = chooseNum();
     if (num == -1 || num == -2) { // exit move command or wrong input
         return -1;
     }
     choose_file(num);
     while (1) {
-        show_directories();
+        show_directories(1);
         num = chooseNum();
         if (num == -1) { // exit move command or wrong input
             return -1;
@@ -37,8 +37,6 @@ int moveFile() {
     strcpy(newPath, destination);
     strcat(newPath, "/");
     strcat(newPath,file_name);
-    printf("OldPath: %s\n", oldPath);
-    printf("NewPath: %s\n", newPath);
     int res = rename(oldPath, newPath);
     return res;
 }

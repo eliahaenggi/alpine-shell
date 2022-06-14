@@ -14,10 +14,7 @@ int tokenTextSize = -1; // Current text size
 /**
  * Token with length == 0 to indicate end of input.
  */
-token eof_token =
-        {
-                .length = 0,
-        };
+token eof_token = { .length = 0 };
 
 /**
  * Add Char to tokenText. If text size equals allocated storage, double storage size.
@@ -50,16 +47,6 @@ token* createToken(char* str) {
 }
 
 /**
- * Deallocates specified token and text in token.
- */
-void freeToken(token *tok) {
-    if (tok->text) {
-        free(tok->text);
-    }
-    free(tok);
-}
-
-/**
  * Creates a new token with specified reader. Calls createToken().
  */
 struct token* tokenize(reader *reader) {
@@ -68,16 +55,13 @@ struct token* tokenize(reader *reader) {
         tokenSize = 512;
         tokenText = malloc(512 * sizeof(char));
     }
-
     tokenTextSize = 0;
     tokenText[0] = '\0';
 
     char ch = incrementIndex(reader);
-
     if (ch == EOF) {
         return &eof_token;
     }
-
     while (1) {
         if (ch == EOF) {
             break;
@@ -96,15 +80,12 @@ struct token* tokenize(reader *reader) {
         addCharToToken(ch);
         ch = incrementIndex(reader);
     }
-
     if (tokenTextSize == 0) {
         return &eof_token;
     }
-
     if (tokenTextSize >= tokenSize) {
         tokenTextSize--;
     }
-
     tokenText[tokenTextSize] = '\0';
     token *tok = createToken(tokenText);
     tok->reader = reader;

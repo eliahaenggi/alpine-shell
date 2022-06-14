@@ -11,14 +11,14 @@
  * @return 0 if file copy was successful, not 0 if failed
  */
 int copyFile() {
-    show_files_();
+    show_files_(1);
     int num = chooseNum();
     if (num == -1 || num == -2) { // exit move command or wrong input
         return -1;
     }
     choose_file(num);
     while (1) {
-        show_directories();
+        show_directories(1);
         num = chooseNum();
         if (num == -1) { // exit move command or wrong input
             return -1;
@@ -36,8 +36,6 @@ int copyFile() {
     strcpy(newPath, destination);
     strcat(newPath, "/");
     strcat(newPath,file_name);
-    printf("OldPath: %s\n", oldPath);
-    printf("NewPath: %s\n", newPath);
     int res = copyFiles(oldPath, newPath);
     return res;
 }

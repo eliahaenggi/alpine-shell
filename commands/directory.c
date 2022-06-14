@@ -53,11 +53,11 @@ struct names_node show_content() {
             if (strcmp(ep->d_name, ".") == 0) {
                 ep = readdir(dir);
             } else if (strcmp(ep->d_name, "..") == 0) {
-                printf("(%d) \"go out 1 directory\"", i);
+                //printf("(%d) \"go out 1 directory\"", i);
                 if (S_ISDIR(file_info.st_mode)) {
-                    printf(" (directory)");
+                    //printf(" (directory)");
                 }
-                printf("\r\n");
+                //printf("\r\n");
                 strcpy(temp->name, ep->d_name);
                 temp->number = i;
                 ep = readdir(dir);
@@ -68,9 +68,9 @@ struct names_node show_content() {
             } else {
                 stat(ep->d_name, &file_info);
                 if (S_ISREG(file_info.st_mode)) {
-                    printf("(%d) %s", i, ep->d_name);
+                    printf(" %s", ep->d_name);
                 } else if (S_ISDIR(file_info.st_mode)) {
-                    printf("\033[0;36m(%d) %s\033[0m", i, ep->d_name);
+                    printf("\033[0;36m %s\033[0m", ep->d_name);
                 }
                 printf("\r\n");
                 strcpy(temp->name, ep->d_name);
@@ -96,7 +96,6 @@ struct names_node show_content() {
     }
 
     getcwd(cwd, PATH_MAX);
-    print_current_dir();
     return *beginning;
 }
 
@@ -135,13 +134,12 @@ int show_files_(int numeration) {
     //free(temp);
     temp->next = NULL;
 
-    printf("\r\n");
     files = beginning;
     temp = beginning;
     while (temp->next != NULL) {
         temp = temp->next;
         if (numeration) {
-            printf("(%d) %s \r\n", temp->number, temp->name);
+            printf("\033[0;36m(%d)\033[0m %s \r\n", temp->number, temp->name);
         } else {
             printf(" %s \r\n",  temp->name);
         }
@@ -163,8 +161,6 @@ int show_directories(int numeration) {
 
     getcwd(cwd, PATH_MAX);
     dir = opendir(cwd);
-
-    printf("current directory: %s", cwd);
 
     rewinddir(dir);
     struct dirent *ep;
@@ -188,14 +184,13 @@ int show_directories(int numeration) {
     //free(temp);
     temp->next = NULL;
 
-    printf("\r\n");
     directories = beginning;
     temp = beginning;
     while (temp->next != NULL) {
         temp = temp->next;
         if (numeration) {
-            if (strcmp(temp->name, "..") == 0) printf("(%d) \"go out by one directory\"\r\n", temp->number);
-            else printf("(%d) %s \r\n", temp->number, temp->name);
+            if (strcmp(temp->name, "..") == 0) printf("\033[0;36m(%d)\033[0m \"go out by one directory\"\r\n", temp->number);
+            else printf("\033[0;36m(%d)\033[0m %s \r\n", temp->number, temp->name);
         } else {
             if (strcmp(temp->name, "..") != 0) {
                 printf(" %s \r\n", temp->name);

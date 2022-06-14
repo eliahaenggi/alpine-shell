@@ -12,6 +12,7 @@
 #include "commands/rename.h"
 #include "commands/move.h"
 
+
 int start(int argc, char **argv) {
     char *cmd;
     while (1) {
@@ -90,7 +91,9 @@ int execute(reader *reader) {
 }
 
 void printPrompt1() {
-    fprintf(stderr, "$ ");
+    char cwdir [PATH_MAX];
+    getcwd(cwdir, PATH_MAX);
+    fprintf(stderr, "%s$ ", cwdir);
 }
 
 void printPrompt2() {
