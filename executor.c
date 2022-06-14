@@ -120,7 +120,7 @@ void executeCmd(cmd* command) {
             }
             break;
         case help:
-            printHelp();
+            //printHelp();
             break;
         case error:
             printf("Command is not known.\n");

@@ -11,8 +11,10 @@
 #include "executor.h"
 #include "commands/rename.h"
 #include "commands/move.h"
+#include "logger.h"
 
 int start(int argc, char **argv) {
+    createLog();
     char *cmd;
     while (1) {
         printPrompt1();

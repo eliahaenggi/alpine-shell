@@ -3,6 +3,7 @@
 #include "number_interface.h"
 #include <string.h>
 #include <stdio.h>
+#include "../logger.h"
 
 
 /**
@@ -39,6 +40,13 @@ int moveFile() {
     strcat(newPath,file_name);
     printf("OldPath: %s\n", oldPath);
     printf("NewPath: %s\n", newPath);
+    appendToLog("The file:");
+    appendToLog(file_name);
+    appendToLog(" was moved from: ");
+    appendToLog(oldPath);
+    appendToLog(" to: ");
+    appendToLog(newPath);
+    appendToLog("\n");
     int res = rename(oldPath, newPath);
     return res;
 }

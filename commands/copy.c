@@ -46,8 +46,8 @@ int copyFile() {
 /**
  * Reads the informaton in source_file and writes them into the specified address of copied_file.
  *
- * @param source_file path of file to copy
- * @param copied_file path of copied file
+ * @param source_file fileLocation of file to copy
+ * @param copied_file fileLocation of copied file
  * @return 0 if copy was successful.
  */
 int copyFiles(char* source_file, char* copied_file) {
