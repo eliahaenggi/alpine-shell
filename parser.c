@@ -102,6 +102,10 @@ void setCmdType(cmd* command) {
         command->type = help;
         return;
     }
+    if (strcmp(headTok.text,"log") == 0) {
+        command->type = log;
+        return;
+    }
     command->type = error;
 }
 

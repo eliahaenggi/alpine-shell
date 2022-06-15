@@ -13,6 +13,7 @@ typedef enum cmdType {
     go,
     run,
     help,
+    log,
     error // wrong argument
 }cmdType;
 

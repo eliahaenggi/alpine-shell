@@ -5,6 +5,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <limits.h>
 
 
 /**
@@ -31,11 +32,11 @@ int moveFile() {
         }
         choose_destination(num);
     }
-    char oldPath [strlen(path_origin)];
+    char oldPath [PATH_MAX + FILENAME_MAX];
     strcpy(oldPath, path_origin);
     strcat(oldPath, "/");
     strcat(oldPath,file_name);
-    char newPath [strlen(destination)];
+    char newPath [PATH_MAX + FILENAME_MAX];
     strcpy(newPath, destination);
     strcat(newPath, "/");
     strcat(newPath,file_name);

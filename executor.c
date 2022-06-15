@@ -123,7 +123,7 @@ void executeCmd(cmd* command) {
                 memset(rest,0, strlen(rest));
                 node *temp = command->head;
                 while (temp->next!=NULL) {
-                    temp=temp->next;
+                    temp = temp->next;
                     strcat(rest, temp->tok.text);
                     strcat(rest, " ");
                 }
@@ -136,6 +136,9 @@ void executeCmd(cmd* command) {
             break;
         case help:
             printHelp();
+            break;
+        case log:
+            printLog();
             break;
         case error:
             printf("\033[1;31mCommand is not known.\033[0m\n");
@@ -156,4 +159,4 @@ void executeCmd(cmd* command) {
     } else {
         appendToLog("\n");
     }
-}
+};

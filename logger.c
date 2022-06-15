@@ -32,3 +32,16 @@ void appendToLog(char message []){
     fputs(message, file);
     fclose(file);
 }
+
+int printLog() {
+    file = fopen(fileLocation, "r");
+    int i;
+    while (1) {
+        i = fgetc(file);
+        if (i == EOF) {
+            break;
+        }
+        printf("%c", i);
+    }
+    fclose(file);
+}

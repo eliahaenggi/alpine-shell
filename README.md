@@ -16,4 +16,5 @@ An executable file named "shell.out" is created. The shell can be executed with 
 - go
 - run <linux_command>
 - help
+- log
 - exit
