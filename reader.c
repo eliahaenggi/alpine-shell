@@ -1,9 +1,10 @@
-#include <errno.h>
-#include "shell.h"
 #include "reader.h"
+#include "shell.h"
+
+#include <errno.h>
 
 /**
- * Increments index and returns char at current position.
+ * Increments index and returns char at current position. Returns a end of file char if end is reached.
  */
 char incrementIndex(reader* reader) {
     reader->index++;
@@ -26,10 +27,10 @@ void decrementIndex(reader* reader) {
 }
 
 /**
- * Returns char at current index. Index is not incremented.
+ * Returns char which should be read next. Index is not incremented.
  */
 char getChar(reader* reader) {
-    long pos = reader->index;
+    int pos = reader->index;
     pos++;
 
     if (pos >= reader->cmdLength) {
@@ -43,14 +44,11 @@ char getChar(reader* reader) {
  * Increments index until char is no white space anymore.
  */
 void skipWhiteSpaces(reader* reader) {
-    if (!reader || !reader->cmd) {
-        return;
-    }
-    char c = getChar(reader);
-    while (c != EOF) {
-        if (c != ' ' && c != '\t') { // Break if char is no white space or tab
+    char ch = getChar(reader);
+    while (ch != EOF) {
+        if (ch != ' ' && ch != '\t') { // Break if char is no white space or tab
             break;
         }
-        c = incrementIndex(reader);
+        ch = incrementIndex(reader);
     }
 }

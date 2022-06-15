@@ -6,6 +6,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 char path_origin [PATH_MAX];
 char destination [PATH_MAX];
@@ -72,7 +73,7 @@ int chooseNum() {
         free(command);
         return -2;
     }
-    command[strlen(command)-1] = '\0'; // cut of \n at the end of command to convert it to int
+    command[strlen(command)-1] = '\0'; // cut of last char at the end of command to convert it to int
     if (!isNumber(command)) {
         printf("Input should be a number.\n");
         return -1;

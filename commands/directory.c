@@ -1,15 +1,13 @@
-//
-// Created by Matthew on 10/06/2022.
-//
+#include "directory.h"
 
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <dirent.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <string.h>
 #include <limits.h>
-#include "directory.h"
 
 char cwd[PATH_MAX];
 struct names_node *filesAndDirectories;

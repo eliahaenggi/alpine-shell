@@ -1,4 +1,5 @@
 #include "parser.h"
+
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -22,6 +23,7 @@ void freeCommand(cmd* command) {
     while(currentNode->next) {
         node* lastNode = currentNode;
         currentNode = currentNode->next;
+        free(lastNode->tok.text);
         free(lastNode);
     }
     free(currentNode);

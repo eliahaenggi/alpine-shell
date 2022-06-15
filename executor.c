@@ -2,14 +2,15 @@
 #include "parser.h"
 #include "commands/rename.h"
 #include "commands/delete.h"
-#include <stdio.h>
 #include "commands/directory.h"
 #include "commands/move.h"
 #include "commands/copy.h"
 #include "commands/number_interface.h"
+#include "commands/help.h"
+
 #include <stdlib.h>
 #include <string.h>
-#include "commands/help.h"
+#include <stdio.h>
 
 
 /**
@@ -25,15 +26,15 @@ void executeCmd(cmd* command) {
             if (command->length == 2) {
                 res = deleteFile(command->head->next->tok.text); // call second node of command linked list
                 if (res != 0) {
-                    printf("Delete failed.\n");
+                    printf("\033[1;31mDelete failed.\033[0m\n");
                 }
             } else if (command->length == 1) {
                 res = chooseDeleteFile();
                 if (res != 0) {
-                    printf("Delete failed.\n");
+                    printf("\033[1;31mDelete failed.\033[0m\n");
                 }
             } else {
-                printf("Invalid number of arguments for delete.\n");
+                printf("\033[1;31mInvalid number of arguments for delete.\033[0m\n");
                 return;
             }
             break;
@@ -41,44 +42,44 @@ void executeCmd(cmd* command) {
             if (command->length == 1) {
                 res = moveFile();
                 if (res != 0) {
-                    printf("File could not be moved.\n");
+                    printf("\033[1;31mFile could not be moved.\033[0m\n");
                     return;
                 }
             } else if (command->length == 3) {
                 res = renameFile(command->head->next->tok.text, command->head->next->next->tok.text); // call second and third node of command linked list
                 if (res != 0) {
-                    printf("File could not be moved.\n");
+                    printf("\033[1;31mFile could not be moved.\033[0m\n");
                 }
             } else {
-                printf("Invalid number of arguments for move.\n");
+                printf("\033[1;31mInvalid number of arguments for move.\033[0m\n");
                 return;
             }
             break;
         case re_name:
             if (command->length != 3) {
-                printf("Invalid number of arguments for rename.\n");
+                printf("\033[1;31mInvalid number of arguments for rename.\033[0m\n");
                 return;
             }
             res = renameFile(command->head->next->tok.text, command->head->next->next->tok.text); // call second and third node of command linked list
             if (res != 0) {
-                printf("Rename failed.\n");
+                printf("\033[1;31mRename failed.\033[0m\n");
             }
             break;
         case copy:
             if (command->length == 1) {
                 res = copyFile();
                 if (res != 0) {
-                    printf("File could not be copied.\n");
+                    printf("\033[1;31mFile could not be copied.\033[0m\n");
                     return;
                 }
             } else if (command->length == 3) {
                 res = copyFiles(command->head->next->tok.text, command->head->next->next->tok.text);
                 if (res != 0) {
-                    printf("File could not be copied.\n");
+                    printf("\033[1;31mFile could not be copied.\033[0m\n");
                     return;
                 }
             } else {
-                printf("Invalid number of arguments for copy.\n");
+                printf("\033[1;31mInvalid number of arguments for copy.\033[0m\n");
                 return;
             }
             break;
@@ -96,13 +97,13 @@ void executeCmd(cmd* command) {
                 show_directories(1);
                 change_directory(chooseNum());
             } else {
-                printf("Invalid number of arguments for go.\n");
+                printf("\033[1;31mInvalid number of arguments for go.\033[0m\n");
                 return;
             }
             break;
         case run:
             if(command->length < 2) {
-                printf("Invalid number of arguments for go.\n");
+                printf("\033[1;31mInvalid number of arguments for run.\033[0m\n");
             } else {
                 char rest [PATH_MAX];
                 memset(rest,0, strlen(rest));
@@ -113,14 +114,17 @@ void executeCmd(cmd* command) {
                     strcat(rest, " ");
                 }
                 rest[strlen(rest)-1] = '\0';
-                system(rest);
+                res = system(rest);
+                if (res != 0) {
+                    printf("\033[1;31mExecution of command failed.\033[0m\n");
+                }
             }
             break;
         case help:
             printHelp();
             break;
         case error:
-            printf("Command is not known.\n");
+            printf("\033[1;31mCommand is not known.\033[0m\n");
             break;
     };
 }
