@@ -14,7 +14,7 @@ int tokenTextLength = -1; // Current text length
 /**
  * Token to indicate end of input. Similar to EOF in reader.
  */
-token eof_token = { .length = 0 };
+token EOFToken = { .length = 0 };
 
 /**
  * Add Char to tokenText. If text size equals allocated storage, double storage size.
@@ -36,20 +36,19 @@ void addCharToToken(char c) {
 token* createToken(char* text) {
     token *tok = malloc(sizeof(token));
 
-    memset(tok, 0, sizeof(token));
     tok->length = strlen(text);
 
-    char *heapText = malloc((tok->length)); // allocate new string on heap
+    char* string = malloc(tok->length); // allocate new string on heap
 
-    strcpy(heapText, text);
-    tok->text = heapText;
+    strcpy(string, text);
+    tok->text = string;
     return tok;
 }
 
 /**
  * Creates a new token with specified reader. Calls createToken().
  */
-struct token* tokenize(reader *reader) {
+token* tokenize(reader *reader) {
     // Define tokenText
     if (!tokenText) {
         tokenSize = 512;
@@ -60,7 +59,7 @@ struct token* tokenize(reader *reader) {
 
     char ch = incrementIndex(reader);
     if (ch == EOF) {
-        return &eof_token;
+        return &EOFToken;
     }
     while (1) {
         if (ch == EOF) {
@@ -81,7 +80,7 @@ struct token* tokenize(reader *reader) {
         ch = incrementIndex(reader);
     }
     if (tokenTextLength == 0) {
-        return &eof_token;
+        return &EOFToken;
     }
     tokenText[tokenTextLength] = '\0';
     token *tok = createToken(tokenText);

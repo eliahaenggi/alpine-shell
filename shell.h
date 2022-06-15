@@ -1,8 +1,8 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-void printPrompt1();
-void printPrompt2();
+int printPrompt1();
+int printPrompt2();
 char* readCommand();
 int execute();
 
