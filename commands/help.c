@@ -2,6 +2,10 @@
 
 #include <stdio.h>
 
+/**
+ * printHelp prints all the commands the user can use on the console
+ * @return 0, if successful
+ */
 int printHelp() {
     printf(" \033[1;36mshow\033[0m                         -- list all directories and files\n");
     printf(" \033[1;36mshowdir\033[0m                      -- list all directories\n");

@@ -9,7 +9,8 @@
 
 
 /**
- * Deletes file with specified name. Returns 0 if deleting was successful. Uses setOldFileName function from rename.c.
+ * Deletes file with specified name. Uses setOldFileName function from rename.c.
+ * @return 0 if deleting was successful
  */
 int deleteFile(char* name) {
     FILE* file;

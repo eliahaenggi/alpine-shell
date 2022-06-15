@@ -17,9 +17,13 @@ struct names_node *directories;
 
 DIR *current_directory;
 struct stat file_info;
-
-// function which takes a string of a location, prints the name of all files and directories inside the location,
-// and saves a linked list, containing all filenames(called directly by other commands, or with command "show")
+/**
+ * show_content looks at alle the files and directories inside
+ * the current working directory and prints them on the console
+ * A linked list is created, which contains all the directories and files.
+ *
+ * @return 0, if successful
+ */
 int show_content() {
     delete_linked_list(files);
 
@@ -81,17 +85,18 @@ int show_content() {
 
     filesAndDirectories = beginning;
     current_directory = dir;
-    temp = beginning;
-
-    while (temp->next != NULL) {
-        temp = temp->next;
-        //printf("(%d) %s \r\n", temp->number, temp->name);
-    }
 
     getcwd(cwd, PATH_MAX);
     return 0;
 }
 
+/**
+ * show_files lists all the files inside the current working directory and prints them on the console
+ * A linked list is created, which contains all files inside the directory.
+ * @param numeration indicates, whether the output should contain
+ * the unique integer identifier of the created list (0, to not show)
+ * @return 0, if there were no errors
+ */
 int show_files_(int numeration) {
     delete_linked_list(files);
 
@@ -139,7 +144,13 @@ int show_files_(int numeration) {
     }
     return 0;
 }
-
+/**
+ * show_directories lists all the directories inside the current working directory and prints them on the console
+ * A linked list is created, which contains all directories inside the directory.
+ * @param numeration indicates, whether the output should contain
+ * the unique integer identifier of the created list (0, to not show)
+ * @return 0, if there were no errors
+ */
 int show_directories(int numeration) {
     delete_linked_list(directories);
 
@@ -192,7 +203,10 @@ int show_directories(int numeration) {
     }
     return 0;
 }
-
+/**
+ * delete_linked_list frees the memory allocated to the entered linked list
+ * @param pNode linked list, which will be deleted
+ */
 void delete_linked_list(struct names_node *pNode) {
     if (pNode == NULL) return;
     struct names_node *tmp;
@@ -211,7 +225,11 @@ void print_current_dir() {
     }
 
 }
-
+/**
+ * change_directory changes the current working directory to the new directory specified by number
+ * @param number the unique integer identifier of the corresponding directory in the respective linked list
+ * @return 0, if successful, -1 if error occurs
+ */
 int change_directory(int number) {
     if (directories != NULL) {
         struct names_node *temp = directories;

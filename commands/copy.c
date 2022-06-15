@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/**opy
+/**copy
  * Copies a file according to the user input in chooseNum(). Uses copyFiles().
  *
  * @return 0 if file copy was successful, not 0 if failed
