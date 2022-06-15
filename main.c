@@ -15,7 +15,10 @@
 #include <string.h>
 #include <unistd.h>
 
-
+/**
+ * starts the whole shell
+ * @return 0 if successful
+ */
 int start(int argc, char **argv) {
     createLog();
     char *cmd;
@@ -39,7 +42,10 @@ int start(int argc, char **argv) {
     }
     exit(EXIT_SUCCESS);
 }
-
+/**
+ * reads the input of the user
+ * @return the input of the user as string
+ */
 char* readCommand() {
     char buffer[512];
     char *ptr = NULL;
