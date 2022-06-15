@@ -1,18 +1,18 @@
+#include "tokenizer.h"
+#include "shell.h"
+#include "reader.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
-#include "shell.h"
-#include "tokenizer.h"
-#include "reader.h"
 
-
-char* tokenText = NULL; // Store token
+char* tokenText = NULL; // Store current token
 int tokenSize  = 0; // Store current allocated storage size
-int tokenTextSize = -1; // Current text size
+int tokenTextLength = -1; // Current text length
 
 /**
- * Token with length == 0 to indicate end of input.
+ * Token to indicate end of input. Similar to EOF in reader.
  */
 token eof_token = { .length = 0 };
 
@@ -20,11 +20,11 @@ token eof_token = { .length = 0 };
  * Add Char to tokenText. If text size equals allocated storage, double storage size.
  */
 void addCharToToken(char c) {
-    tokenText[tokenTextSize] = c;
-    tokenTextSize++;
+    tokenText[tokenTextLength] = c;
+    tokenTextLength++;
 
-    if (tokenTextSize >= tokenSize) {
-        tokenSize = 2 * tokenTextSize;
+    if (tokenTextLength >= tokenSize) {
+        tokenSize = 2 * tokenTextLength;
         char *tmp = realloc(tokenText, tokenSize);
         tokenText = tmp;
     }
@@ -33,16 +33,16 @@ void addCharToToken(char c) {
 /**
  * Creates a new token struct with specified string as tokenText.
  */
-token* createToken(char* str) {
+token* createToken(char* text) {
     token *tok = malloc(sizeof(token));
 
-    memset(tok, 0, sizeof(token)); // fills tok with zeros
-    tok->length = strlen(str);
+    memset(tok, 0, sizeof(token));
+    tok->length = strlen(text);
 
-    char *newstr = malloc((tok->length) + 1); // allocate new string on heap with length + 1
+    char *heapText = malloc((tok->length)); // allocate new string on heap
 
-    strcpy(newstr, str);
-    tok->text = newstr;
+    strcpy(heapText, text);
+    tok->text = heapText;
     return tok;
 }
 
@@ -55,7 +55,7 @@ struct token* tokenize(reader *reader) {
         tokenSize = 512;
         tokenText = malloc(512 * sizeof(char));
     }
-    tokenTextSize = 0;
+    tokenTextLength = 0;
     tokenText[0] = '\0';
 
     char ch = incrementIndex(reader);
@@ -67,12 +67,12 @@ struct token* tokenize(reader *reader) {
             break;
         }
         if (ch == ' ' || ch == '\t') {
-            if (tokenTextSize > 0) {
+            if (tokenTextLength > 0) {
                 break;
             }
         }
         if (ch == '\n') {
-            if (tokenTextSize > 0) {
+            if (tokenTextLength > 0) {
                 decrementIndex(reader);
             }
             break;
@@ -80,13 +80,10 @@ struct token* tokenize(reader *reader) {
         addCharToToken(ch);
         ch = incrementIndex(reader);
     }
-    if (tokenTextSize == 0) {
+    if (tokenTextLength == 0) {
         return &eof_token;
     }
-    if (tokenTextSize >= tokenSize) {
-        tokenTextSize--;
-    }
-    tokenText[tokenTextSize] = '\0';
+    tokenText[tokenTextLength] = '\0';
     token *tok = createToken(tokenText);
     tok->reader = reader;
     return tok;

@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <string.h>
 #include "shell.h"
 #include "reader.h"
 #include "tokenizer.h"
@@ -11,6 +7,12 @@
 #include "executor.h"
 #include "commands/rename.h"
 #include "commands/move.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <string.h>
+#include <unistd.h>
 
 
 int start(int argc, char **argv) {

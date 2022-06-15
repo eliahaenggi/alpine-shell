@@ -1,9 +1,11 @@
 #include "delete.h"
 #include "rename.h"
-#include <stdio.h>
-#include <string.h>
 #include "directory.h"
 #include "number_interface.h"
+
+#include <stdio.h>
+#include <string.h>
+
 
 /**
  * Deletes file with specified name. Returns 0 if deleting was successful. Uses setOldFileName function from rename.c.
