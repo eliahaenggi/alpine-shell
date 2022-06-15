@@ -2,6 +2,7 @@
 #include "rename.h"
 #include "directory.h"
 #include "number_interface.h"
+#include "../logger.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -34,6 +35,9 @@ int chooseDeleteFile() {
     strcpy(oldPath, path_origin);
     strcat(oldPath, "/");
     strcat(oldPath,file_name);
+    appendToLog("delete ");
+    appendToLog(oldPath);
+    appendToLog(" ");
     int res = deleteFile(oldPath);
     return res;
 }

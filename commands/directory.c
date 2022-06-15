@@ -1,4 +1,5 @@
 #include "directory.h"
+#include "../logger.h"
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -211,7 +212,7 @@ void print_current_dir() {
 
 }
 
-void change_directory(int number) {
+int change_directory(int number) {
     if (directories != NULL) {
         struct names_node *temp = directories;
         while (temp->next != NULL) {
@@ -222,9 +223,17 @@ void change_directory(int number) {
                 //getcwd(cwd, sizeof cwd);
                 //current_directory = opendir(cwd);
                 //show_content();
-                return;
+                appendToLog("go ");
+                appendToLog(temp->name);
+                appendToLog(" ");
+                return 0;
             }
         }
-    } else printf("WTF HAPPENED?");
+        appendToLog("go ");
+        return -1;
+    } else {
+        printf("WTF HAPPENED?");
+        return -1;
+    }
 }
 

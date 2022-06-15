@@ -36,7 +36,7 @@ int show_files_();
 //DIR current_directory;
 
 // changes into the newly specified directory
-void change_directory(int number);
+int change_directory(int number);
 
 // Exits the current directory and opens the containing one
 DIR exit_directory();

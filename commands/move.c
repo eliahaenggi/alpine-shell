@@ -1,6 +1,7 @@
 #include "move.h"
 #include "directory.h"
 #include "number_interface.h"
+#include "../logger.c"
 
 #include <string.h>
 #include <stdio.h>
@@ -38,6 +39,11 @@ int moveFile() {
     strcpy(newPath, destination);
     strcat(newPath, "/");
     strcat(newPath,file_name);
+    appendToLog("move ");
+    appendToLog(oldPath);
+    appendToLog(" ");
+    appendToLog(newPath);
+    appendToLog(" ");
     int res = rename(oldPath, newPath);
     return res;
 }
