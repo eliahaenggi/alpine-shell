@@ -36,7 +36,7 @@ int start(int argc, char **argv) {
     exit(EXIT_SUCCESS);
 }
 
-char *readCommand() {
+char* readCommand() {
     char buffer[512];
     char *ptr = NULL;
     char ptrLength = 0;
@@ -56,19 +56,14 @@ char *readCommand() {
         }
         strcpy(ptr + ptrLength, buffer);
         if (buffer[bufferLength - 1] == '\n') {
-            if (bufferLength == 1 || buffer[bufferLength - 2] != '\\') {
-                return ptr;
-            }
-            ptr[ptrLength + bufferLength - 2] = '\0';
-            bufferLength = bufferLength - 2;
-            printPrompt2();
+            return ptr;
         }
         ptrLength = ptrLength + bufferLength;
     }
     return ptr;
 }
 
-int execute(reader *reader) {
+int execute(reader* reader) {
     skipWhiteSpaces(reader);
 
     token *tok = tokenize(reader);
