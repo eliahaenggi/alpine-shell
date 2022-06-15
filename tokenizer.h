@@ -9,7 +9,7 @@ typedef struct token {
 }token;
 
 // Token to mark end of the input
-extern token eof_token;
+extern token EOFToken;
 
 token* tokenize(reader* src);
 void freeToken(token* tok);

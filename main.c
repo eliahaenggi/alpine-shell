@@ -25,13 +25,17 @@ int start(int argc, char **argv) {
     while (1) {
         printPrompt1();
         cmd = readCommand();
-        if (cmd[0] == '\0' || strcmp(cmd, "\n") == 0) {
+        if (cmd[0] == '\0') {
             free(cmd);
             continue;
         }
         if (strcmp(cmd, "exit\n") == 0) {
             free(cmd);
             break;
+        }
+        if (strcmp(cmd, "\n") == 0) {
+            free(cmd);
+            continue;
         }
         reader reader;
         reader.cmd = cmd;
@@ -40,7 +44,7 @@ int start(int argc, char **argv) {
         execute(&reader);
         free(cmd);
     }
-    exit(EXIT_SUCCESS);
+    return 0;
 }
 /**
  * reads the input of the user
@@ -53,16 +57,12 @@ char* readCommand() {
 
     while (fgets(buffer, 512, stdin)) {
         int bufferLength = strlen(buffer);
+
         if (!ptr) {
-            ptr = malloc(bufferLength + 1);
+            ptr = malloc(bufferLength);
         } else {
-            char *ptr2 = realloc(ptr, ptrLength + bufferLength + 1);
-            if (ptr2) {
-                ptr = ptr2;
-            } else {
-                free(ptr);
-                ptr = NULL;
-            }
+            char* newptr = malloc(ptrLength + bufferLength);
+            ptr = newptr;
         }
         strcpy(ptr + ptrLength, buffer);
         if (buffer[bufferLength - 1] == '\n') {
@@ -75,14 +75,13 @@ char* readCommand() {
 
 int execute(reader* reader) {
     skipWhiteSpaces(reader);
-
     token *tok = tokenize(reader);
 
-    if (tok == &eof_token) {
+    if (tok == &EOFToken) {
         return 0;
     }
     cmd *command = createCommand();
-    while (tok && tok != &eof_token) {
+    while (tok != &EOFToken) {
         node *n = createNode(tok);
         addNodeToList(n, command);
         if (command->length == 1) {
@@ -95,14 +94,16 @@ int execute(reader* reader) {
     return 0;
 }
 
-void printPrompt1() {
+int printPrompt1() {
     char cwdir [PATH_MAX];
     getcwd(cwdir, PATH_MAX);
     fprintf(stderr, "%s$ ", cwdir);
+    return 0;
 }
 
-void printPrompt2() {
+int printPrompt2() {
     fprintf(stderr, "> ");
+    return 0;
 }
 
 int main(int argc, char **argv) {

@@ -46,7 +46,7 @@ char getChar(reader* reader) {
 void skipWhiteSpaces(reader* reader) {
     char ch = getChar(reader);
     while (ch != EOF) {
-        if (ch != ' ' && ch != '\t') { // Break if char is no white space or tab
+        if (ch != ' ' && ch != '\t') { // Break if char is no space or tab
             break;
         }
         ch = incrementIndex(reader);
