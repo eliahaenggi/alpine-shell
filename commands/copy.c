@@ -1,7 +1,7 @@
 #include "copy.h"
 #include "number_interface.h"
 #include "directory.h"
-#include "../logger.c"
+#include "../logger.h"
 
 #include <string.h>
 #include <stdio.h>

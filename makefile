@@ -1,2 +1,2 @@
-makefile: main.c reader.c tokenizer.c parser.c executor.c commands/directory.c commands/move.c commands/copy.c commands/rename.c commands/number_interface.c commands/delete.c commands/help.c
-	gcc -o shell.out main.c reader.c tokenizer.c parser.c executor.c commands/directory.c commands/move.c commands/copy.c commands/rename.c commands/number_interface.c commands/delete.c commands/help.c
+makefile: main.c reader.c tokenizer.c parser.c executor.c logger.c commands/directory.c commands/move.c commands/copy.c commands/rename.c commands/number_interface.c commands/delete.c commands/help.c
+	gcc -o shell.out main.c reader.c tokenizer.c parser.c executor.c logger.c commands/directory.c commands/move.c commands/copy.c commands/rename.c commands/number_interface.c commands/delete.c commands/help.c

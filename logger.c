@@ -21,7 +21,6 @@ void deleteLog() {
     FILE* file;
     file = fopen(fileLocation, "r");
     if (!file) {
-        printf("File does not exist. ");
         return;
     } else {
         fclose(file);
@@ -29,7 +28,7 @@ void deleteLog() {
     remove(fileLocation);
 }
 void appendToLog(char message []){
-    file = fopen(fileLocation, "w");
+    file = fopen(fileLocation, "a");
     fputs(message, file);
     fclose(file);
 }

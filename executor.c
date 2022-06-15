@@ -152,7 +152,7 @@ void executeCmd(cmd* command) {
         }
     }
     if (res != 0) {
-        appendToLog("\033[1;31mFAILED\033[0m\n");
+        appendToLog("FAILED\n");
     } else {
         appendToLog("\n");
     }
