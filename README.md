@@ -1,5 +1,5 @@
 # Shell-Project
-This is a custom build Shell, written in C. It was made for the Alpine Linux Distribution. It was designed for easier manipulation of the file system 
+This repostiory contains a custom build Shell, written in C. It was made for the Alpine Linux Distribution. It was designed for easier manipulation of the file system 
 including moving, copying, renaming and deleting of files. Functionalities that are not implemented can be accessed by entering the run-command together with the system call.
 
 ## Compilation of the Shell
